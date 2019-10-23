@@ -1,0 +1,87 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://maven.google.com' }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.0'
+    }
+}
+
+repositories {
+    jcenter()
+    mavenLocal()
+    maven { url 'https://maven.google.com' }
+}
+
+android {
+    compileSdkVersion Integer.parseInt(System.properties['compileSdkVersion'] ?: '26')
+    buildToolsVersion System.properties['buildToolsVersion'] ?: '26.0.2'
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'] ?: '26')
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 60, 'seconds'
+}
+
+
+dependencies {
+    if (project.hasProperty('vlayoutDevMode')) {
+        println 'compile with vlayout source code'
+        api(project(':vlayout')) {
+            exclude group: 'com.android.support', module: 'recyclerview-v7'
+            exclude group: 'com.android.support', module: 'support-v4'
+            exclude group: 'com.android.support', module: 'support-annotations'
+        }
+    } else {
+        api('com.alibaba.android:vlayout:1.2.24@aar') {
+            changing = true
+        }
+    }
+
+    compileOnly 'io.reactivex.rxjava2:rxjava:2.1.12'
+    compileOnly 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation project(':common')
+
+    if (project.hasProperty('ultraViewPagerDevMode')) {
+        println 'compile with ultraViewPager source code'
+        api project(':ultraviewpager')
+    } else {
+        api 'com.alibaba.android:ultraviewpager:1.0.7.8@aar'
+    }
+    println 'compile with virtualview source code'
+    api(project(':virtualview')) {
+
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v7-recyclerview'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+}
