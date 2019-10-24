@@ -19,8 +19,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion System.properties['compileSdkVersion'] ? Integer.parseInt(System.properties['compileSdkVersion']) : 25
-    buildToolsVersion System.properties['buildToolsVersion'] ? System.properties['buildToolsVersion'] : '25.0.3'
+    compileSdkVersion Integer.parseInt(System.properties['compileSdkVersion'])
+    buildToolsVersion System.properties['buildToolsVersion']
 
     lintOptions {
         abortOnError false
@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion System.properties['targetSdkVersion'] ? Integer.parseInt(System.properties['targetSdkVersion']) : 25
+        targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'])
         versionCode 1
         versionName "1.0"
     }

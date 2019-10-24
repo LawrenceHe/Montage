@@ -2,7 +2,6 @@ package com.zhaodongdb.wireless;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +34,7 @@ import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.network.ZdHttpFailure;
+import com.zhaodongdb.wireless.router.ZDRouter;
 import com.zhaodongdb.wireless.support.SampleClickSupport;
 import com.zhaodongdb.wireless.support.SampleErrorSupport;
 
@@ -312,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                 refreshByName(mTemplateName);
                 return true;
             case R.id.menu_rtl:
-                startActivity(new Intent(this, MainActivity.class));
+                ZDRouter.navigation("zhaodong://native/montage/standard?pageName=home");
                 return true;
         }
         return super.onOptionsItemSelected(item);

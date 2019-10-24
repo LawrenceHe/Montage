@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion System.properties['compileSdkVersion'] ? Integer.parseInt(System.properties['compileSdkVersion']) : 25
-    buildToolsVersion System.properties['buildToolsVersion'] ? System.properties['buildToolsVersion'] : '25.0.3'
+    compileSdkVersion Integer.parseInt(System.properties['compileSdkVersion'])
+    buildToolsVersion System.properties['buildToolsVersion']
 
     lintOptions {
         abortOnError false
@@ -10,10 +10,11 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion System.properties['targetSdkVersion'] ? Integer.parseInt(System.properties['targetSdkVersion']) : 25
+        targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'])
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -29,19 +30,15 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-//    api 'com.android.support:support-v4:27.0.2'
-//    api 'com.android.support:appcompat-v7:27.0.2'
-//    api 'com.android.support:support-compat:27.0.2'
-//    api 'com.android.support:support-annotations:27.0.2'
-//    api 'com.android.support:recyclerview-v7:27.0.2'
     api 'com.android.support:support-v4:28.0.0'
     api 'com.android.support:appcompat-v7:28.0.0'
     api 'com.android.support:support-compat:28.0.0'
     api 'com.android.support:support-annotations:28.0.0'
     api 'com.android.support:recyclerview-v7:28.0.0'
     api 'com.squareup.picasso:picasso:2.5.2'
-    api 'com.alibaba:fastjson:1.1.70.android'
+    api 'com.alibaba:fastjson:1.2.48'
     api 'com.squareup.okhttp3:okhttp:3.10.0'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
