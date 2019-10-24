@@ -2,12 +2,12 @@ package com.zhaodongdb.wireless;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,13 +15,11 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.Range;
 import com.libra.Utils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
-import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.TangramEngine;
 import com.tmall.wireless.tangram.core.adapter.GroupBasicAdapter;
 import com.tmall.wireless.tangram.dataparser.concrete.Card;
@@ -30,7 +28,6 @@ import com.tmall.wireless.tangram.support.InternalErrorSupport;
 import com.tmall.wireless.tangram.support.async.AsyncLoader;
 import com.tmall.wireless.tangram.support.async.AsyncPageLoader;
 import com.tmall.wireless.tangram.support.async.CardLoadSupport;
-import com.tmall.wireless.tangram.util.IInnerImageSetter;
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
 import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
@@ -50,12 +47,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = "MainActivity";
+
     private Handler mMainHandler;
     TangramEngine engine;
-    TangramBuilder.InnerBuilder builder;
     RecyclerView recyclerView;
     private String mTemplateName = "HelloWorld";
 
@@ -66,29 +65,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView) findViewById(R.id.main_view);
 
-        //Step 1: init tangram
-        TangramBuilder.init(this.getApplicationContext(), new IInnerImageSetter() {
-            @Override
-            public <IMAGE extends ImageView> void doLoadImageUrl(@NonNull IMAGE view,
-                                                                 @Nullable String url) {
-                Picasso.with(MainActivity.this.getApplicationContext()).load(url).into(view);
-            }
-        }, ImageView.class);
-
         //Tangram.switchLog(true);
         mMainHandler = new Handler(getMainLooper());
 
-        //Step 2: register build=in cells and cards
-        builder = TangramBuilder.newInnerBuilder(this);
-
-        //Step 3: register business cells and cards
-        builder.registerVirtualView(mTemplateName);
         //Step 4: new engine
-        engine = builder.build();
-        // VirtualViewTemplate文件中应该是自带TemplateName的，否则怎么能跟注册的VirtualViewType对应得上呢？
-        //refreshByName(mTemplateName);
-//        engine.setVirtualViewTemplate(VVTEST.BIN);
-//        engine.setVirtualViewTemplate(DEBUG.BIN);
+        engine = ZhaodongDBApplication.getInstance().getMontageBuilder().build();
 
         engine.getService(VafContext.class).setImageLoaderAdapter(new ImageLoader.IImageLoaderAdapter() {
 
@@ -97,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void bindImage(String uri, final ImageBase imageBase, int reqWidth, int reqHeight) {
                 RequestCreator requestCreator = Picasso.with(MainActivity.this).load(uri);
-                Log.d("TangramActivity", "bindImage request width height " + reqHeight + " " + reqWidth);
+                Log.d(TAG, "bindImage request width height " + reqHeight + " " + reqWidth);
                 if (reqHeight > 0 || reqWidth > 0) {
                     requestCreator.resize(reqWidth, reqHeight);
                 }
@@ -109,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void getBitmap(String uri, int reqWidth, int reqHeight, final ImageLoader.Listener lis) {
                 RequestCreator requestCreator = Picasso.with(MainActivity.this).load(uri);
-                Log.d("TangramActivity", "getBitmap request width height " + reqHeight + " " + reqWidth);
+                Log.d(TAG, "getBitmap request width height " + reqHeight + " " + reqWidth);
                 if (reqHeight > 0 || reqWidth > 0) {
                     requestCreator.resize(reqWidth, reqHeight);
                 }
@@ -290,30 +271,29 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(ZDHttpResponse response) throws IOException {
 
                 final String json = response.getResponseString();
-
-                final PreviewData previewData = com.alibaba.fastjson.JSON.parseObject(json, PreviewData.class);
+                final PageData pageData = com.alibaba.fastjson.JSON.parseObject(json, PageData.class);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (previewData != null) {
-                            loadTemplates(previewData);
+                        if (pageData != null) {
+                            loadTemplates(pageData);
                         }
-
                     }
                 });
             }
         });
     }
 
-    private void loadTemplates(PreviewData data){
-        for (String temp : data.templates) {
-            engine.setVirtualViewTemplate(Base64.decode(temp, Base64.DEFAULT));
-            //engine.registerVirtualViewTemplate(mTemplateName, Base64.decode(temp, Base64.DEFAULT));
+    private void loadTemplates(PageData data){
+        for (Map.Entry<String, String> template : data.getTemplates().entrySet()) {
+            engine.registerVirtualViewTemplate(
+                    template.getKey(),
+                    Base64.decode(template.getValue(), Base64.DEFAULT));
         }
         // Step 10: get tangram data and pass it to engine
         try {
-            engine.setData(new JSONArray(data.data));
+            engine.setData(new JSONArray(data.getData()));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -332,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
                 refreshByName(mTemplateName);
                 return true;
             case R.id.menu_rtl:
-                //changeRtl();
+                startActivity(new Intent(this, MainActivity.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -65,23 +65,16 @@ dependencies {
         }
     }
 
-    compileOnly 'io.reactivex.rxjava2:rxjava:2.1.12'
-    compileOnly 'io.reactivex.rxjava2:rxandroid:2.0.2'
-    implementation project(':common')
-
     if (project.hasProperty('ultraViewPagerDevMode')) {
         println 'compile with ultraViewPager source code'
         api project(':ultraviewpager')
     } else {
         api 'com.alibaba.android:ultraviewpager:1.0.7.8@aar'
     }
-    println 'compile with virtualview source code'
-    api(project(':virtualview')) {
 
-        exclude group: 'com.android.support', module: 'appcompat'
-        exclude group: 'com.android.support', module: 'appcompat-v7'
-        exclude group: 'com.android.support', module: 'support-v7-recyclerview'
-        exclude group: 'com.android.support', module: 'support-v4'
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+    compileOnly 'io.reactivex.rxjava2:rxjava:2.1.12'
+    compileOnly 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation project(':common')
+    api project(':virtualview')
+
 }
