@@ -10,6 +10,8 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.squareup.picasso.Picasso;
 import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.util.IInnerImageSetter;
+import com.zhaodongdb.common.utils.DeviceUtil;
+import com.zhaodongdb.common.utils.FoundationContextHolder;
 
 public class ZhaodongDBApplication extends Application {
 
@@ -28,6 +30,8 @@ public class ZhaodongDBApplication extends Application {
         super.onCreate();
 
         instance = this;
+        FoundationContextHolder.setApplication(instance);
+        FoundationContextHolder.setContext(instance);
 
         Picasso.setSingletonInstance(new Picasso.Builder(this).loggingEnabled(true).build());
         final Context appContext = this.getApplicationContext();
@@ -44,10 +48,10 @@ public class ZhaodongDBApplication extends Application {
         //Step 3: register business cells and cards
         //builder.registerVirtualView(templateName);
 
-//        if (isDebug()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
+        if (DeviceUtil.isApkDebugable()) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
             ARouter.openLog();     // 打印日志
             ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
-//        }
+        }
         ARouter.init(instance); // 尽可能早，推荐在Application中初始化
     }
 }
