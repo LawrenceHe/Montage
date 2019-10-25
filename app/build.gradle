@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.zhaodongdb.wireless"
-        minSdkVersion 21
+        minSdkVersion Integer.parseInt(System.properties['minSdkVersion'])
         targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'])
         versionCode 1
         versionName "1.0"

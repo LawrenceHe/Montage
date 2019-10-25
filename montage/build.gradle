@@ -23,7 +23,7 @@ android {
     buildToolsVersion System.properties['buildToolsVersion']
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion Integer.parseInt(System.properties['minSdkVersion'])
         targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'])
     }
 
