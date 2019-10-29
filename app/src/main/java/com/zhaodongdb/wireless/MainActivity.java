@@ -1,5 +1,6 @@
 package com.zhaodongdb.wireless;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -34,6 +35,7 @@ import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.network.ZdHttpFailure;
+import com.zhaodongdb.common.utils.PermissionHelper;
 import com.zhaodongdb.wireless.router.ZDRouter;
 import com.zhaodongdb.wireless.support.SampleClickSupport;
 import com.zhaodongdb.wireless.support.SampleErrorSupport;
@@ -200,6 +202,8 @@ public class MainActivity extends AppCompatActivity {
         engine.getLayoutManager().setFixOffset(0, 40, 0, 0);
 
         refreshByName(mTemplateName);
+
+        requestAllPermissions();
     }
 
     @Override
@@ -312,9 +316,34 @@ public class MainActivity extends AppCompatActivity {
                 refreshByName(mTemplateName);
                 return true;
             case R.id.menu_rtl:
-                ZDRouter.navigation("zhaodong://native/montage/standard?pageName=home");
+                ZDRouter.navigation("zhaodong://native/montage/standard?pageName=temp");
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void requestAllPermissions() {
+        PermissionHelper.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.ACCESS_FINE_LOCATION}
+                , false, new PermissionHelper.PermissionCallback() {
+                    @Override
+                    public void onPermissionCallback(String[] permissions, PermissionHelper.PermissionResult[] grantResults) {
+                        try {
+                            if (grantResults != null) {
+                                StringBuilder sb = new StringBuilder();
+                                for (PermissionHelper.PermissionResult pResult : grantResults) {
+                                    sb.append(pResult.grantResult);
+                                    sb.append("--");
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionsError(String errMsg, String[] permissions, PermissionHelper.PermissionResult[] grantResults) {
+                    }
+                });
     }
 }
