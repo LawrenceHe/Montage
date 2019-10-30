@@ -26,8 +26,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".StandardMontageActivity">
-            <!-- Schema -->
+        <activity android:name=".StandardMontageActivity" />
+
+        <activity android:name=".OuterRouterActivity"
+            android:exported="true">
+
             <intent-filter>
                 <data
                     android:host="native"

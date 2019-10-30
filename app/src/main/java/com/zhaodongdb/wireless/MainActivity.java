@@ -30,6 +30,7 @@ import com.tmall.wireless.tangram.support.async.AsyncPageLoader;
 import com.tmall.wireless.tangram.support.async.CardLoadSupport;
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
+import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
 import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                 requestCreator.into(imageTarget);
             }
         });
+        engine.getService(VafContext.class).getEventManager().register(EventManager.TYPE_Click, new VirtualViewEventProcessor());
         Utils.setUedScreenWidth(720);
 
         //Step 5: add card load support if you have card that loading cells async

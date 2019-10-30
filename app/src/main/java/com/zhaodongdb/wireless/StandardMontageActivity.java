@@ -22,6 +22,7 @@ import com.tmall.wireless.tangram.TangramEngine;
 import com.tmall.wireless.tangram.support.InternalErrorSupport;
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
+import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
 import com.zhaodongdb.common.network.BaseSender;
 import com.zhaodongdb.common.network.ZDHttpCallback;
@@ -88,7 +89,7 @@ public class StandardMontageActivity extends AppCompatActivity {
                 requestCreator.into(imageTarget);
             }
         });
-
+        engine.getService(VafContext.class).getEventManager().register(EventManager.TYPE_Click, new VirtualViewEventProcessor());
         engine.addSimpleClickSupport(new SampleClickSupport());
         engine.enableAutoLoadMore(true);
         engine.register(InternalErrorSupport.class, new SampleErrorSupport());

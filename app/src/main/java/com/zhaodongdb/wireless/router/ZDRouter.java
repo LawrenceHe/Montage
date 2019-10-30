@@ -1,27 +1,19 @@
 package com.zhaodongdb.wireless.router;
 
-import com.alibaba.android.arouter.facade.Postcard;
-import com.alibaba.android.arouter.launcher.ARouter;
+import android.net.Uri;
+import android.support.annotation.NonNull;
 
-import java.net.URI;
-import java.util.regex.PatternSyntaxException;
+import com.alibaba.android.arouter.launcher.ARouter;
 
 public class ZDRouter {
 
-    public static void navigation(String url) {
-        URI uri =  URI.create(url);
-        Postcard postcard = ARouter.getInstance().build(uri.getPath());
-        try {
-            String[] query = uri.getQuery().split("&");
-            for (String q: query) {
-                String[] i = q.split("=");
-                postcard.withString(i[0], i[1]);
-            }
-        } catch (PatternSyntaxException e) {
-            e.printStackTrace();
-        }
+    public static void navigation(@NonNull String url) {
+        Uri uri = Uri.parse(url);
+        navigation(uri);
+    }
 
-        postcard.navigation();
+    public static void navigation(@NonNull Uri uri) {
+        ARouter.getInstance().build(uri).navigation();
     }
 
 }
