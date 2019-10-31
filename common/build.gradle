@@ -13,6 +13,13 @@ android {
         targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'])
         versionCode 1
         versionName "1.0"
+
+        // Support ARouter
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -38,6 +45,9 @@ dependencies {
     api 'com.squareup.picasso:picasso:2.5.2'
     api 'com.alibaba:fastjson:1.2.48'
     api 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    api 'com.alibaba:arouter-api:1.5.0'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'

@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless.router;
+package com.zhaodongdb.common.router;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

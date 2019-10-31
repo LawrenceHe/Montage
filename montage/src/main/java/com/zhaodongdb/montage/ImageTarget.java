@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless;
+package com.zhaodongdb.montage;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;

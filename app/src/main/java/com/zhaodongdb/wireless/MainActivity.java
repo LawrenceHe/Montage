@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -15,19 +16,21 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.alibaba.android.vlayout.Range;
 import com.libra.Utils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.TangramEngine;
 import com.tmall.wireless.tangram.core.adapter.GroupBasicAdapter;
 import com.tmall.wireless.tangram.dataparser.concrete.Card;
 import com.tmall.wireless.tangram.structure.BaseCell;
-import com.tmall.wireless.tangram.support.InternalErrorSupport;
 import com.tmall.wireless.tangram.support.async.AsyncLoader;
 import com.tmall.wireless.tangram.support.async.AsyncPageLoader;
 import com.tmall.wireless.tangram.support.async.CardLoadSupport;
+import com.tmall.wireless.tangram.util.IInnerImageSetter;
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
 import com.tmall.wireless.vaf.virtualview.event.EventManager;
@@ -37,9 +40,10 @@ import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.network.ZdHttpFailure;
 import com.zhaodongdb.common.utils.PermissionHelper;
-import com.zhaodongdb.wireless.router.ZDRouter;
-import com.zhaodongdb.wireless.support.SampleClickSupport;
-import com.zhaodongdb.wireless.support.SampleErrorSupport;
+import com.zhaodongdb.montage.ImageTarget;
+import com.zhaodongdb.montage.PageData;
+import com.zhaodongdb.montage.VirtualViewEventProcessor;
+import com.zhaodongdb.common.router.ZDRouter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,18 +69,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_montage_standard);
         recyclerView = (RecyclerView) findViewById(R.id.main_view);
 
         //Tangram.switchLog(true);
         mMainHandler = new Handler(getMainLooper());
 
-        //Step 4: new engine
-        engine = ZhaodongDBApplication.getInstance().getMontageBuilder().build();
-
+        final Context appContext = this.getApplicationContext();
+        //Step 1: init tangram
+        TangramBuilder.init(appContext, new IInnerImageSetter() {
+            @Override
+            public <IMAGE extends ImageView> void doLoadImageUrl(@NonNull IMAGE view,
+                                                                 @Nullable String url) {
+                Picasso.with(appContext).load(url).into(view);
+            }
+        }, ImageView.class);
+        //Step 2: register build=in cells and cards
+        TangramBuilder.InnerBuilder montageBuilder = TangramBuilder.newInnerBuilder(this);
+        engine = montageBuilder.build();
         engine.getService(VafContext.class).setImageLoaderAdapter(new ImageLoader.IImageLoaderAdapter() {
 
-            private List<ImageTarget> cache = new ArrayList<ImageTarget>();
+            private List<com.zhaodongdb.montage.ImageTarget> cache = new ArrayList<com.zhaodongdb.montage.ImageTarget>();
 
             @Override
             public void bindImage(String uri, final ImageBase imageBase, int reqWidth, int reqHeight) {
@@ -85,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 if (reqHeight > 0 || reqWidth > 0) {
                     requestCreator.resize(reqWidth, reqHeight);
                 }
-                ImageTarget imageTarget = new ImageTarget(imageBase);
+                com.zhaodongdb.montage.ImageTarget imageTarget = new com.zhaodongdb.montage.ImageTarget(imageBase);
                 cache.add(imageTarget);
                 requestCreator.into(imageTarget);
             }
@@ -97,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 if (reqHeight > 0 || reqWidth > 0) {
                     requestCreator.resize(reqWidth, reqHeight);
                 }
-                ImageTarget imageTarget = new ImageTarget(lis);
+                com.zhaodongdb.montage.ImageTarget imageTarget = new ImageTarget(lis);
                 cache.add(imageTarget);
                 requestCreator.into(imageTarget);
             }
@@ -180,13 +193,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }));
 
-
-
-        engine.addSimpleClickSupport(new SampleClickSupport());
-
         //Step 6: enable auto load more if your page's data is lazy loaded
         engine.enableAutoLoadMore(true);
-        engine.register(InternalErrorSupport.class, new SampleErrorSupport());
 
         //Step 7: bind recyclerView to engine
         engine.bindView(recyclerView);
@@ -206,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
         refreshByName(mTemplateName);
 
         requestAllPermissions();
+
+
     }
 
     @Override
@@ -255,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String getUrl(String name) {
-        return HttpUtil.getHostUrl() + name + "/data.json";
+        return "http://10.0.2.2:7788/" + name + "/data.json";
     }
 
     private void refreshByName(String name) {
@@ -277,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(ZDHttpResponse response) throws IOException {
 
                 final String json = response.getResponseString();
-                final PageData pageData = com.alibaba.fastjson.JSON.parseObject(json, PageData.class);
+                final com.zhaodongdb.montage.PageData pageData = com.alibaba.fastjson.JSON.parseObject(json, com.zhaodongdb.montage.PageData.class);
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -310,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

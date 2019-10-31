@@ -1,10 +1,11 @@
-package com.zhaodongdb.wireless;
+package com.zhaodongdb.montage;
 
 import com.tmall.wireless.vaf.virtualview.event.EventData;
 import com.tmall.wireless.vaf.virtualview.event.IEventProcessor;
-import com.zhaodongdb.wireless.router.ZDRouter;
+import com.zhaodongdb.common.router.ZDRouter;
 
-import static com.zhaodongdb.wireless.VirtualViewAction.ACTION_OPEN_NEW_PAGE;
+
+import static com.zhaodongdb.montage.VirtualViewAction.ACTION_OPEN_NEW_PAGE;
 
 public class VirtualViewEventProcessor implements IEventProcessor {
 

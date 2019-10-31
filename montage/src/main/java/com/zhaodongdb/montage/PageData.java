@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless;
+package com.zhaodongdb.montage;
 
 import java.io.Serializable;
 import java.util.Map;

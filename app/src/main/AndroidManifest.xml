@@ -26,9 +26,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".StandardMontageActivity" />
+        <activity android:name="com.zhaodongdb.montage.StandardMontageActivity"/>
 
-        <activity android:name=".OuterRouterActivity"
+        <activity android:name="com.zhaodongdb.common.router.OuterRouterActivity"
             android:exported="true">
 
             <intent-filter>

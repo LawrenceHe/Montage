@@ -1,14 +1,18 @@
-package com.zhaodongdb.wireless;
+package com.zhaodongdb.montage;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -18,8 +22,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.libra.Utils;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
+import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.TangramEngine;
-import com.tmall.wireless.tangram.support.InternalErrorSupport;
+import com.tmall.wireless.tangram.core.R;
+import com.tmall.wireless.tangram.util.IInnerImageSetter;
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
 import com.tmall.wireless.vaf.virtualview.event.EventManager;
@@ -29,8 +35,6 @@ import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.network.ZdHttpFailure;
-import com.zhaodongdb.wireless.support.SampleClickSupport;
-import com.zhaodongdb.wireless.support.SampleErrorSupport;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,10 +61,21 @@ public class StandardMontageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_montage_standard);
         recyclerView = (RecyclerView) findViewById(R.id.main_view);
 
-        engine = ZhaodongDBApplication.getInstance().getMontageBuilder().build();
+        final Context appContext = this.getApplicationContext();
+        //Step 1: init tangram
+        TangramBuilder.init(appContext, new IInnerImageSetter() {
+            @Override
+            public <IMAGE extends ImageView> void doLoadImageUrl(@NonNull IMAGE view,
+                                                                 @Nullable String url) {
+                Picasso.with(appContext).load(url).into(view);
+            }
+        }, ImageView.class);
+        //Step 2: register build=in cells and cards
+        TangramBuilder.InnerBuilder montageBuilder = TangramBuilder.newInnerBuilder(this);
+        engine = montageBuilder.build();
         engine.getService(VafContext.class).setImageLoaderAdapter(new ImageLoader.IImageLoaderAdapter() {
 
             private List<ImageTarget> cache = new ArrayList<ImageTarget>();
@@ -90,9 +105,9 @@ public class StandardMontageActivity extends AppCompatActivity {
             }
         });
         engine.getService(VafContext.class).getEventManager().register(EventManager.TYPE_Click, new VirtualViewEventProcessor());
-        engine.addSimpleClickSupport(new SampleClickSupport());
+//        engine.addSimpleClickSupport(new SampleClickSupport());
         engine.enableAutoLoadMore(true);
-        engine.register(InternalErrorSupport.class, new SampleErrorSupport());
+//        engine.register(InternalErrorSupport.class, new SampleErrorSupport());
         engine.bindView(recyclerView);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -178,10 +193,10 @@ public class StandardMontageActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                refreshByName();
-                return true;
+
+        if (item.getItemId() == R.id.menu_refresh) {
+            refreshByName();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
