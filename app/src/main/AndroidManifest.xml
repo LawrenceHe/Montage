@@ -27,6 +27,7 @@
 
         <activity android:name=".MainActivity"/>
         <activity android:name="com.zhaodongdb.montage.StandardMontageActivity"/>
+        <activity android:name="com.zhaodongdb.montage.DebugMontageActivity"/>
 
         <activity android:name="com.zhaodongdb.common.router.OuterRouterActivity"
             android:exported="true">

@@ -45,10 +45,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Route(path = "/montage/standard")
-public class StandardMontageActivity extends AppCompatActivity {
+@Route(path = "/montage/debug")
+public class DebugMontageActivity extends AppCompatActivity {
 
-    final String TAG = StandardMontageActivity.class.getSimpleName();
+    final String TAG = DebugMontageActivity.class.getSimpleName();
 
     @Autowired
     String pageName;
@@ -82,7 +82,7 @@ public class StandardMontageActivity extends AppCompatActivity {
 
             @Override
             public void bindImage(String uri, final ImageBase imageBase, int reqWidth, int reqHeight) {
-                RequestCreator requestCreator = Picasso.with(StandardMontageActivity.this).load(uri);
+                RequestCreator requestCreator = Picasso.with(DebugMontageActivity.this).load(uri);
                 Log.d(TAG, "bindImage request width height " + reqHeight + " " + reqWidth);
                 if (reqHeight > 0 || reqWidth > 0) {
                     requestCreator.resize(reqWidth, reqHeight);
@@ -94,7 +94,7 @@ public class StandardMontageActivity extends AppCompatActivity {
 
             @Override
             public void getBitmap(String uri, int reqWidth, int reqHeight, final ImageLoader.Listener lis) {
-                RequestCreator requestCreator = Picasso.with(StandardMontageActivity.this).load(uri);
+                RequestCreator requestCreator = Picasso.with(DebugMontageActivity.this).load(uri);
                 Log.d(TAG, "getBitmap request width height " + reqHeight + " " + reqWidth);
                 if (reqHeight > 0 || reqWidth > 0) {
                     requestCreator.resize(reqWidth, reqHeight);
@@ -130,7 +130,7 @@ public class StandardMontageActivity extends AppCompatActivity {
     }
 
     private String getUrl() {
-        return "http://192.168.54.2:18080/page/getPageInfo.json";
+        return "http://10.0.2.2:7788/" + pageName + "/data.json";
     }
 
     private void refreshByName() {
@@ -142,7 +142,7 @@ public class StandardMontageActivity extends AppCompatActivity {
         Map<String, String> body = new HashMap<>();
         body.put("pageName", pageName);
 
-        ZDHttpClient.getInstance().asyncPost(url, BaseSender.buildJsonRequest(body), new ZDHttpCallback() {
+        ZDHttpClient.getInstance().asyncGet(url, new ZDHttpCallback() {
 
             @Override
             public void onFailure(ZdHttpFailure failure) {
@@ -153,9 +153,7 @@ public class StandardMontageActivity extends AppCompatActivity {
             public void onResponse(ZDHttpResponse response) throws IOException {
 
                 final String json = response.getResponseString();
-                final JSONObject obj = JSON.parseObject(json)
-                        .getJSONObject("data")
-                        .getJSONObject("pageInfo");
+                final JSONObject obj = JSON.parseObject(json);
                 final PageData pageData = obj.toJavaObject(PageData.class);
 
                 runOnUiThread(new Runnable() {

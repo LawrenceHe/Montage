@@ -10,6 +10,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Point;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
@@ -51,10 +52,10 @@ import static android.content.Context.TELEPHONY_SERVICE;
 
 public class DeviceUtil {
 
-    private final static int kSystemRootStateUnknow = -1;
+    private final static int kSystemRootStateUnknown = -1;
     private final static int kSystemRootStateDisable = 0;
     private final static int kSystemRootStateEnable = 1;
-    private static int systemRootState = kSystemRootStateUnknow;
+    private static int systemRootState = kSystemRootStateUnknown;
     private static Boolean isEmulatorDevice;
     private static int windowWidth;// 屏幕宽
     private static int windowHeight;// 屏幕高
@@ -64,6 +65,14 @@ public class DeviceUtil {
     private static String androidID = "";
 
     private static Boolean isPad = false;
+
+    static {
+        Display display = ((WindowManager) FoundationContextHolder.getApplication().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        DeviceUtil.setWindowHeight(point.y);
+        DeviceUtil.setWindowWidth(point.x);
+    }
 
     public static String getMacAddress() {
         if (!StringUtil.emptyOrNull(macAddress)) {

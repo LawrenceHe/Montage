@@ -1,13 +1,18 @@
 package com.zhaodongdb.wireless;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.view.Window;
 
 import com.qmuiteam.qmui.arch.QMUIFragmentActivity;
 import com.qmuiteam.qmui.arch.annotation.DefaultFirstFragment;
 import com.qmuiteam.qmui.arch.annotation.FirstFragments;
 import com.qmuiteam.qmui.arch.annotation.LatestVisitRecord;
+import com.zhaodongdb.common.router.ZDRouter;
+import com.zhaodongdb.common.utils.DeviceUtil;
 import com.zhaodongdb.wireless.fragment.home.MainFragment;
 
 @FirstFragments(
@@ -29,5 +34,22 @@ public class MainActivity extends QMUIFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (DeviceUtil.isApkDebugable()) {
+            initDebugView(this);
+        }
+    }
+
+    private void initDebugView(final Activity activity) {
+        ViewGroup group = (ViewGroup) activity.getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+        FloatDebugView debugView = new FloatDebugView(activity, R.drawable.icon_bug);
+        debugView.setImageMargin(DeviceUtil.getScreenHeight() - DeviceUtil.getPixelFromDip(150)
+                , DeviceUtil.getScreenWidth() - DeviceUtil.getPixelFromDip(50));
+        group.addView(debugView, group.getChildCount());
+        debugView.setOnOpenListener(new FloatDebugView.OnOpenListener() {
+            @Override
+            public void onOpen() {
+                ZDRouter.navigation("/montage/debug?" + "pageName=Home");
+            }
+        });
     }
 }
