@@ -26,23 +26,7 @@
         </activity>
 
         <activity android:name=".MainActivity"/>
-        <activity android:name="com.zhaodongdb.montage.StandardMontageActivity"/>
-        <activity android:name="com.zhaodongdb.montage.DebugMontageActivity"/>
 
-        <activity android:name="com.zhaodongdb.common.router.OuterRouterActivity"
-            android:exported="true">
-
-            <intent-filter>
-                <data
-                    android:host="native"
-                    android:scheme="zhaodong"/>
-
-                <action android:name="android.intent.action.VIEW"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

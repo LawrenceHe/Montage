@@ -34,7 +34,7 @@ import com.zhaodongdb.common.network.BaseSender;
 import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpResponse;
-import com.zhaodongdb.common.network.ZdHttpFailure;
+import com.zhaodongdb.common.network.ZDHttpFailure;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -145,7 +145,7 @@ public class StandardMontageActivity extends AppCompatActivity {
         ZDHttpClient.getInstance().asyncPost(url, BaseSender.buildJsonRequest(body), new ZDHttpCallback() {
 
             @Override
-            public void onFailure(ZdHttpFailure failure) {
+            public void onFailure(ZDHttpFailure failure) {
                 Log.d("Montage", "failure");
             }
 

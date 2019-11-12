@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface ZDHttpCallback {
 
-    void onFailure(ZdHttpFailure failure);
+    void onFailure(ZDHttpFailure failure);
 
     void onResponse(ZDHttpResponse response) throws IOException;
 }

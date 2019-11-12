@@ -255,7 +255,7 @@ public class ZDHttpClient {
                         public void run() {
                             try {
                                 if (responseCallback != null) {
-                                    ZdHttpFailure failure = new ZdHttpFailure();
+                                    ZDHttpFailure failure = new ZDHttpFailure();
                                     failure.setCall(call);
                                     failure.setException(e);
                                     responseCallback.onFailure(failure);
@@ -294,7 +294,7 @@ public class ZDHttpClient {
                         }
 
                     } else {
-                        final ZdHttpFailure failure = new ZdHttpFailure();
+                        final ZDHttpFailure failure = new ZDHttpFailure();
                         failure.setCall(call);
                         failure.setResponse(response);
                         String detailMessage = "HTTP Response Error";

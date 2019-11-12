@@ -34,4 +34,11 @@ public class BaseSender {
         return JSON.toJSONString(request);
     }
 
+    public static String buildJsonRequest() {
+        CommonRequestHeader header = buildCommonRequestHeader(null);
+        CommonRequest<Map<String, String>> request = new CommonRequest<>();
+        request.setHeader(header);
+
+        return JSON.toJSONString(request);
+    }
 }

@@ -12,6 +12,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
@@ -20,21 +21,22 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.libra.Utils;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.TangramEngine;
+
 import com.tmall.wireless.tangram.core.R;
 import com.tmall.wireless.tangram.util.IInnerImageSetter;
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
 import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
-import com.zhaodongdb.common.network.BaseSender;
 import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpResponse;
-import com.zhaodongdb.common.network.ZdHttpFailure;
+import com.zhaodongdb.common.network.ZDHttpFailure;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +55,9 @@ public class DebugMontageActivity extends AppCompatActivity {
     @Autowired
     String pageName;
 
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
+    QMUITopBarLayout topBar;
+
     private TangramEngine engine;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -61,8 +65,23 @@ public class DebugMontageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ARouter.getInstance().inject(this);
-        setContentView(R.layout.activity_montage_standard);
-        recyclerView = (RecyclerView) findViewById(R.id.main_view);
+        setContentView(R.layout.activity_montage_debug);
+        recyclerView = findViewById(R.id.main_view);
+        topBar = findViewById(R.id.topbar);
+        topBar.addLeftTextButton("back", R.id.MONTAGE_DEBUG_VIEW_BACK_BTN).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        topBar.addRightTextButton("refresh", R.id.MONTAGE_DEBUG_VIEW_REFRESH_BTN)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        refreshByName();
+                    }
+                });
+        topBar.setTitle(pageName);
 
         final Context appContext = this.getApplicationContext();
         //Step 1: init tangram
@@ -145,7 +164,7 @@ public class DebugMontageActivity extends AppCompatActivity {
         ZDHttpClient.getInstance().asyncGet(url, new ZDHttpCallback() {
 
             @Override
-            public void onFailure(ZdHttpFailure failure) {
+            public void onFailure(ZDHttpFailure failure) {
                 Log.d("Montage", "failure");
             }
 
