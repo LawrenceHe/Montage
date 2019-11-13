@@ -30,7 +30,7 @@ import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
 import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
-import com.zhaodongdb.common.network.BaseSender;
+import com.zhaodongdb.common.network.HttpRequestHelper;
 import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpResponse;
@@ -142,7 +142,7 @@ public class StandardMontageActivity extends AppCompatActivity {
         Map<String, String> body = new HashMap<>();
         body.put("pageName", pageName);
 
-        ZDHttpClient.getInstance().asyncPost(url, BaseSender.buildJsonRequest(body), new ZDHttpCallback() {
+        ZDHttpClient.getInstance().asyncPost(url, HttpRequestHelper.buildJsonRequest(body), new ZDHttpCallback() {
 
             @Override
             public void onFailure(ZDHttpFailure failure) {

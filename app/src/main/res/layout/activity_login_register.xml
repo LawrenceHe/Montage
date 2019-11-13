@@ -27,7 +27,7 @@
         android:paddingRight="15dp">
 
         <EditText
-            android:id="@+id/loginMobile"
+            android:id="@+id/mobile"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,11 +48,12 @@
         android:paddingRight="15dp">
 
         <EditText
+            android:id="@+id/messageToken"
             android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/messageToken"
+            android:layout_toLeftOf="@+id/sendMessageToken"
             android:gravity="center_vertical"
             android:hint="短信验证码"
             android:text=""
@@ -61,7 +62,7 @@
             android:textSize="15dp" />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/messageToken"
+            android:id="@+id/sendMessageToken"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -77,7 +78,7 @@
     </RelativeLayout>
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:id="@+id/loginAndRegister"
+        android:id="@+id/loginOrRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

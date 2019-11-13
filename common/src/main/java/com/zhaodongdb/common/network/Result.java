@@ -5,7 +5,7 @@ import java.time.Instant;
 
 public class Result<T> implements Serializable {
 
-    public static final String SUCCESSFUL_CODE = "0";
+    public static final String SUCCESSFUL_CODE = "000000";
     public static final String SUCCESSFUL_MSG = "处理成功";
 
     // 处理结果代码
@@ -47,5 +47,9 @@ public class Result<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public boolean isSuccess() {
+        return SUCCESSFUL_CODE.equals(code);
     }
 }
