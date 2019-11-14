@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
             android:name=".LauncherActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
@@ -27,6 +27,8 @@
 
         <activity android:name=".MainActivity"/>
         <activity android:name=".login.LoginRegisterActivity" />
+        <activity android:name=".patternlocker.PatternSettingActivity" />
+        <activity android:name=".patternlocker.PatternCheckingActivity" />
 
     </application>
 

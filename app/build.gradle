@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+//apply plugin: 'kotlin-kapt'
+//
+//kapt {
+//    arguments {
+//        arg("AROUTER_MODULE_NAME", project.getName())
+//    }
+//}
 
 android {
 
@@ -36,8 +43,9 @@ dependencies {
     implementation project(':montage')
     implementation project(':common')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
+//    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
+//    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
     annotationProcessor 'com.qmuiteam:arch-compiler:0.6.2'
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
     testImplementation 'junit:junit:4.12'

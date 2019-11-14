@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless.login.entity;
+package com.zhaodongdb.wireless.login;
 
 public class LoginRegisterRespData {
 

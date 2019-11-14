@@ -18,12 +18,11 @@ import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpFailure;
 import com.zhaodongdb.common.network.ZDHttpResponse;
+import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.user.UserInfo;
 import com.zhaodongdb.common.utils.SafeHandler;
 import com.zhaodongdb.common.utils.ThreadUtils;
 import com.zhaodongdb.wireless.R;
-import com.zhaodongdb.wireless.login.entity.LoginRegisterRespData;
-import com.zhaodongdb.wireless.login.entity.MessageTokenRespData;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -158,7 +157,7 @@ public class LoginRegisterActivity extends BaseActivity {
                                     UserInfo.getInstance().setUserId(result.getData().getUserId());
                                     UserInfo.getInstance().setAccessToken(result.getData().getAccessToken());
                                     UserInfo.getInstance().setRefreshToken(result.getData().getRefreshToken());
-
+                                    ZDRouter.navigation("/app/patternlocker/setting");
                                 } else {
                                     Toast.makeText(LoginRegisterActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                 }
