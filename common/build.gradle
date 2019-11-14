@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-//apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion Integer.parseInt(System.properties['compileSdkVersion'])
@@ -49,9 +49,9 @@ dependencies {
     api 'com.qmuiteam:qmui:1.4.0'
     api 'com.qmuiteam:arch:0.6.2'
     api 'com.alibaba:arouter-api:1.5.0'
-    api 'com.jakewharton:butterknife:8.8.1'
+    api "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
