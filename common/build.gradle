@@ -1,7 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'realm-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+
 //apply plugin: 'kotlin-kapt'
 //
 //kapt {

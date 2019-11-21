@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
 
 buildscript {
     repositories {
@@ -82,5 +83,6 @@ dependencies {
     compileOnly 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation project(':common')
     api project(':virtualview')
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
     annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
 }

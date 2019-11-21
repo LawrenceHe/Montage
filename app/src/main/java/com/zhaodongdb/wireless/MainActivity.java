@@ -48,7 +48,7 @@ public class MainActivity extends QMUIFragmentActivity {
         debugView.setOnOpenListener(new FloatDebugView.OnOpenListener() {
             @Override
             public void onOpen() {
-                ZDRouter.navigation("/montage/debug?" + "pageName=Home");
+                ZDRouter.navigation("/app/debug");
             }
         });
     }

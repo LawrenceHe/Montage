@@ -26,7 +26,6 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
 import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.TangramEngine;
-
 import com.tmall.wireless.tangram.core.R;
 import com.tmall.wireless.tangram.util.IInnerImageSetter;
 import com.tmall.wireless.vaf.framework.VafContext;
@@ -35,8 +34,8 @@ import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
 import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
-import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.network.ZDHttpFailure;
+import com.zhaodongdb.common.network.ZDHttpResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -68,13 +67,13 @@ public class DebugMontageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_montage_debug);
         recyclerView = findViewById(R.id.main_view);
         topBar = findViewById(R.id.topbar);
-        topBar.addLeftTextButton("back", R.id.MONTAGE_DEBUG_VIEW_BACK_BTN).setOnClickListener(new View.OnClickListener() {
+        topBar.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        topBar.addRightTextButton("refresh", R.id.MONTAGE_DEBUG_VIEW_REFRESH_BTN)
+        topBar.addRightImageButton(R.drawable.montage_icon_refresh, R.id.MONTAGE_DEBUG_VIEW_REFRESH_BTN)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

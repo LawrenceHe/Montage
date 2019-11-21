@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.realm.Realm;
 
 @Route(path = "/app/loginOrRegister")
 public class LoginRegisterActivity extends BaseActivity {
@@ -45,11 +47,12 @@ public class LoginRegisterActivity extends BaseActivity {
     @BindView(R.id.messageToken) EditText messageTokenEdit;
     @BindView(R.id.sendMessageToken) QMUIRoundButton sendMessageTokenButton;
 
-    final int COUNT_DOWN = 60;
-    int count = COUNT_DOWN;
-    SafeHandler handler = new SafeHandler(this);
-    Timer timer = null;
-    TimerTask task = null;
+    private final int COUNT_DOWN = 60;
+    private int count = COUNT_DOWN;
+    private SafeHandler handler = new SafeHandler(this);
+    private Timer timer = null;
+
+    private Realm realm;
 
     @Override
     public void safeHandleMessage(Message msg) {
@@ -74,7 +77,7 @@ public class LoginRegisterActivity extends BaseActivity {
             timer.cancel();
         }
         timer = new Timer();
-        task = new TimerTask() {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 Message msg = new Message();
@@ -170,15 +173,23 @@ public class LoginRegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        realm = Realm.getDefaultInstance();
         setContentView(R.layout.activity_login_register);
         ButterKnife.bind(this);
 
         topBarLayout.setTitle("登录/注册");
+        topBarLayout.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        realm.close();
         if (timer != null) {
             timer.cancel();
         }
