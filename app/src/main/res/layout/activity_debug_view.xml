@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
@@ -11,11 +11,11 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp" >
+        android:paddingRight="15dp">
 
         <Button
             android:id="@+id/testRealmDatabase"
@@ -25,27 +25,27 @@
             android:textSize="18dp" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/openCertainPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="打开页面"
+                android:text="打开"
                 android:textSize="18dp" />
 
             <EditText
                 android:id="@+id/pageUrl"
-                android:hint="Url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:maxLines="1" />
+                android:hint="Url"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textSize="18dp" />
 
         </LinearLayout>
-
 
     </LinearLayout>
 

@@ -1,5 +1,7 @@
 package com.zhaodongdb.wireless.debug;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +12,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.zhaodongdb.common.component.BaseActivity;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.user.User;
+import com.zhaodongdb.common.utils.FoundationContextHolder;
 import com.zhaodongdb.wireless.R;
 
 import butterknife.BindView;
@@ -22,6 +25,8 @@ import io.realm.RealmResults;
 public class DebugViewActivity extends BaseActivity {
 
     final static String TAG = DebugViewActivity.class.getSimpleName();
+
+    SharedPreferences debugInfoSP = FoundationContextHolder.getContext().getSharedPreferences("DebugInfo", Context.MODE_PRIVATE);
 
     @BindView(R.id.topbar)
     QMUITopBarLayout topBar;
@@ -77,11 +82,16 @@ public class DebugViewActivity extends BaseActivity {
                 finish();
             }
         });
+
+        String pageUrl = debugInfoSP.getString("pageUrl", "");
+        pageUrlEdit.setText(pageUrl);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         realm.close();
+
+        debugInfoSP.edit().putString("pageUrl", pageUrlEdit.getText().toString()).apply();
     }
 }
