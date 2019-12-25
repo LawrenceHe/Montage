@@ -11,6 +11,7 @@ import com.qmuiteam.qmui.arch.QMUIFragmentActivity;
 import com.qmuiteam.qmui.arch.annotation.DefaultFirstFragment;
 import com.qmuiteam.qmui.arch.annotation.FirstFragments;
 import com.qmuiteam.qmui.arch.annotation.LatestVisitRecord;
+import com.zhaodongdb.common.debug.FloatDebugView;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.utils.DeviceUtil;
 import com.zhaodongdb.wireless.fragment.home.MainFragment;
@@ -48,7 +49,7 @@ public class MainActivity extends QMUIFragmentActivity {
         debugView.setOnOpenListener(new FloatDebugView.OnOpenListener() {
             @Override
             public void onOpen() {
-                ZDRouter.navigation("/app/debug");
+                ZDRouter.navigation("/common/debug");
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless;
+package com.zhaodongdb.common.debug;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

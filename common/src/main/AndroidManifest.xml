@@ -23,6 +23,7 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
+        <activity android:name=".debug.DebugViewActivity" />
         <activity android:name=".patternlocker.PatternSettingActivity" />
         <activity android:name=".patternlocker.PatternCheckingActivity" />
 

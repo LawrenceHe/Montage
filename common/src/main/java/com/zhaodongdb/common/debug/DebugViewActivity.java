@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless.debug;
+package com.zhaodongdb.common.debug;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,11 +9,12 @@ import android.widget.EditText;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.zhaodongdb.common.R2;
 import com.zhaodongdb.common.component.BaseActivity;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.user.User;
 import com.zhaodongdb.common.utils.FoundationContextHolder;
-import com.zhaodongdb.wireless.R;
+import com.zhaodongdb.common.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,17 +22,17 @@ import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-@Route(path = "/app/debug")
+@Route(path = "/common/debug")
 public class DebugViewActivity extends BaseActivity {
 
     final static String TAG = DebugViewActivity.class.getSimpleName();
 
     SharedPreferences debugInfoSP = FoundationContextHolder.getContext().getSharedPreferences("DebugInfo", Context.MODE_PRIVATE);
 
-    @BindView(R.id.topbar)
+    @BindView(R2.id.topbar)
     QMUITopBarLayout topBar;
 
-    @OnClick(R.id.testRealmDatabase)
+    @OnClick(R2.id.testRealmDatabase)
     void writeUserData() {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -58,10 +59,10 @@ public class DebugViewActivity extends BaseActivity {
         Log.d(TAG, mobile);
     }
 
-    @BindView(R.id.pageUrl)
+    @BindView(R2.id.pageUrl)
     EditText pageUrlEdit;
 
-    @OnClick(R.id.openCertainPage)
+    @OnClick(R2.id.openCertainPage)
     void openCertainPage() {
         ZDRouter.navigation(pageUrlEdit.getText().toString());
     }
