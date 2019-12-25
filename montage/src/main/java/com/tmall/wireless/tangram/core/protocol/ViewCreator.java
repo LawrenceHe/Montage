@@ -25,9 +25,10 @@
 package com.tmall.wireless.tangram.core.protocol;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by villadora on 15/12/8.

@@ -24,8 +24,9 @@
 
 package com.tmall.wireless.tangram.eventbus;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

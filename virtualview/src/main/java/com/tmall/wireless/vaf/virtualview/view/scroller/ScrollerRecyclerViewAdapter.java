@@ -24,15 +24,13 @@
 
 package com.tmall.wireless.vaf.virtualview.view.scroller;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import android.support.v4.util.SparseArrayCompat;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.collection.SparseArrayCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.libra.virtualview.common.ScrollerCommon;
 import com.tmall.wireless.vaf.framework.VafContext;
@@ -46,6 +44,9 @@ import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by gujicheng on 16/8/24.

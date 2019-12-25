@@ -25,15 +25,16 @@
 package com.tmall.wireless.tangram.structure.viewcreator;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.tmall.wireless.tangram.core.R;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+
 import com.tmall.wireless.tangram.TangramBuilder;
+import com.tmall.wireless.tangram.core.R;
 import com.tmall.wireless.tangram.util.LogUtils;
 
 import java.lang.reflect.Constructor;

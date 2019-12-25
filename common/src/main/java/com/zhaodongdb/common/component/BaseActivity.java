@@ -2,8 +2,9 @@ package com.zhaodongdb.common.component;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 

@@ -24,13 +24,11 @@
 
 package com.tmall.wireless.tangram.dataparser.concrete;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.vlayout.LayoutHelper;
-import com.alibaba.android.vlayout.layout.GridLayoutHelper;
 import com.alibaba.android.vlayout.layout.RangeGridLayoutHelper;
-
 import com.tmall.wireless.tangram.structure.BaseCell;
 import com.tmall.wireless.tangram.structure.card.GridCard;
 

@@ -1,18 +1,19 @@
 package com.zhaodongdb.common.component;
 
-import android.app.Application;
 import android.util.Log;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.squareup.picasso.Picasso;
 import com.zhaodongdb.common.utils.DeviceUtil;
 import com.zhaodongdb.common.utils.FoundationContextHolder;
-import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class BaseApplication extends Application {
+public class BaseApplication extends MultiDexApplication {
 
     private static BaseApplication instance;
     public static BaseApplication getInstance() {

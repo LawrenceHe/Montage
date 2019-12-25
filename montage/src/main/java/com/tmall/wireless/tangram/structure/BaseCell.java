@@ -24,15 +24,13 @@
 
 package com.tmall.wireless.tangram.structure;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.tmall.wireless.tangram.Engine;
 import com.tmall.wireless.tangram.MVHelper;
 import com.tmall.wireless.tangram.core.service.ServiceManager;
@@ -47,8 +45,13 @@ import com.tmall.wireless.tangram.util.BDE;
 import com.tmall.wireless.tangram.util.IInnerImageSetter;
 import com.tmall.wireless.tangram.util.ImageUtils;
 import com.tmall.wireless.tangram.util.LifeCycleProviderImpl;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by mikeafc on 16/4/25.

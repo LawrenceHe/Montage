@@ -24,16 +24,18 @@
 
 package com.tmall.wireless.tangram.support;
 
+import android.os.Handler;
+import android.os.Looper;
+
+import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+
+import com.tmall.wireless.tangram.support.TimerSupport.OnTickListener;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.Keep;
-import android.support.annotation.NonNull;
-import com.tmall.wireless.tangram.support.TimerSupport.OnTickListener;
 
 public class HandlerTimer implements Runnable, ITimer {
     private Handler mHandler;

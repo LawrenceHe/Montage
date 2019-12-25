@@ -2,7 +2,7 @@ package com.zhaodongdb.wireless.patternlocker
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 
 import com.zhaodongdb.common.patternlocker.CellBean
 import com.zhaodongdb.common.patternlocker.IHitCellView

@@ -26,9 +26,11 @@ package com.tmall.wireless.vaf.framework;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewConfiguration;
+
+import androidx.annotation.NonNull;
+
 import com.tmall.wireless.vaf.expr.engine.ExprEngine;
 import com.tmall.wireless.vaf.expr.engine.NativeObjectManager;
 import com.tmall.wireless.vaf.framework.cm.ComContainerTypeMap;

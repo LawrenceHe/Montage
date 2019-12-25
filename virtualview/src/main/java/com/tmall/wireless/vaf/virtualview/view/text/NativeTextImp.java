@@ -27,11 +27,9 @@ package com.tmall.wireless.vaf.virtualview.view.text;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.support.annotation.ColorInt;
-import android.text.style.LineHeightSpan;
 import android.widget.TextView;
+
+import androidx.annotation.ColorInt;
 
 import com.tmall.wireless.vaf.virtualview.Helper.VirtualViewUtils;
 import com.tmall.wireless.vaf.virtualview.core.IView;

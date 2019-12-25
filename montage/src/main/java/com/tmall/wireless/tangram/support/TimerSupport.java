@@ -24,12 +24,14 @@
 
 package com.tmall.wireless.tangram.support;
 
-import android.support.annotation.Keep;
-import android.support.annotation.NonNull;
+import androidx.annotation.Keep;
+import androidx.annotation.NonNull;
+
 import com.tmall.wireless.tangram.support.HandlerTimer.TimerStatus;
-import io.reactivex.Observable;
 
 import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
 
 /**
  * Created by villadora on 15/9/8.

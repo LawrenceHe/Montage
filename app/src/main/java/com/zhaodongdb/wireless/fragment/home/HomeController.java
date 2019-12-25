@@ -2,9 +2,10 @@ package com.zhaodongdb.wireless.fragment.home;
 
 import android.content.Context;
 import android.os.Parcelable;
-import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;

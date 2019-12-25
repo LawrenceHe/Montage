@@ -24,14 +24,14 @@
 
 package com.tmall.wireless.tangram.structure.card;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.LinearLayoutHelper;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import com.tmall.wireless.tangram.MVHelper;
 import com.tmall.wireless.tangram.dataparser.concrete.Style;
-import org.json.JSONArray;
+
 import org.json.JSONObject;
 
 /**

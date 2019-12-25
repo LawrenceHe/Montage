@@ -24,33 +24,35 @@
 
 package com.tmall.wireless.tangram.dataparser.concrete;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.tmall.wireless.tangram.MVHelper;
 import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.core.service.ServiceManager;
-import com.tmall.wireless.tangram.MVHelper;
 import com.tmall.wireless.tangram.dataparser.DataParser;
 import com.tmall.wireless.tangram.op.ParseComponentsOp;
 import com.tmall.wireless.tangram.op.ParseGroupsOp;
-import com.tmall.wireless.tangram.op.ParseSingleGroupOp;
 import com.tmall.wireless.tangram.op.ParseSingleComponentOp;
+import com.tmall.wireless.tangram.op.ParseSingleGroupOp;
 import com.tmall.wireless.tangram.structure.BaseCell;
 import com.tmall.wireless.tangram.structure.card.SlideCard;
 import com.tmall.wireless.tangram.structure.card.WrapCellCard;
 import com.tmall.wireless.tangram.util.LogUtils;
 import com.tmall.wireless.tangram.util.Preconditions;
 
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.ObservableTransformer;
-import io.reactivex.functions.Function;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.ObservableTransformer;
+import io.reactivex.functions.Function;
 
 /**
  * DataParser parse JSONArray into Card/Cell

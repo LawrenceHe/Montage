@@ -24,12 +24,12 @@
 
 package com.tmall.wireless.tangram.structure.card;
 
+import androidx.annotation.Nullable;
+
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.layout.ScrollFixLayoutHelper;
 
 import org.json.JSONObject;
-
-import android.support.annotation.Nullable;
 
 /**
  * Created by longerian on 16/12/11.

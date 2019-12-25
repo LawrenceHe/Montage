@@ -24,12 +24,10 @@
 
 package com.tmall.wireless.vaf.virtualview.core;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import android.support.v4.util.SparseArrayCompat;
 import android.util.Log;
 import android.view.View;
+
+import androidx.collection.SparseArrayCompat;
 
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.event.EventData;
@@ -38,6 +36,9 @@ import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by gujicheng on 16/12/19.

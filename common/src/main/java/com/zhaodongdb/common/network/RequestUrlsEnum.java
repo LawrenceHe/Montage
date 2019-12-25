@@ -1,6 +1,6 @@
 package com.zhaodongdb.common.network;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.zhaodongdb.common.config.AppConfig;
 

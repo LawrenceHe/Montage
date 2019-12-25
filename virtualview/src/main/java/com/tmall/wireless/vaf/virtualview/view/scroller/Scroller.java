@@ -25,11 +25,11 @@
 package com.tmall.wireless.vaf.virtualview.view.scroller;
 
 import android.graphics.Rect;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.libra.Utils;
 import com.libra.expr.common.ExprCode;

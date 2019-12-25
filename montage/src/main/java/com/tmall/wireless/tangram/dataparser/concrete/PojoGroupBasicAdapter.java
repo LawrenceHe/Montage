@@ -24,30 +24,28 @@
 
 package com.tmall.wireless.tangram.dataparser.concrete;
 
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Pair;
+import android.util.SparseArray;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.Range;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
-
-import android.util.Log;
 import com.tmall.wireless.tangram.MVHelper;
 import com.tmall.wireless.tangram.core.adapter.BinderViewHolder;
 import com.tmall.wireless.tangram.core.adapter.GroupBasicAdapter;
 import com.tmall.wireless.tangram.core.protocol.ControlBinder;
 import com.tmall.wireless.tangram.structure.BaseCell;
-
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
-import android.util.Pair;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
-import android.view.View;
-import android.view.ViewGroup;
 import com.tmall.wireless.tangram.support.CellSupport;
 import com.tmall.wireless.tangram.support.PageDetectorSupport;
 import com.tmall.wireless.vaf.framework.ViewManager;
-import java.lang.annotation.Inherited;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

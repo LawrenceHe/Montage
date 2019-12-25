@@ -24,7 +24,7 @@
 
 package com.tmall.wireless.vaf.virtualview.view.slider;
 
-import android.support.v7.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.LinearSnapHelper;
 
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.core.ViewBase;

@@ -1,6 +1,6 @@
 package com.zhaodongdb.common.patternlocker
 
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 
 /**
  * Created by hsg on 28/04/2019.

@@ -24,9 +24,10 @@
 
 package com.tmall.wireless.tangram;
 
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 import com.tmall.wireless.tangram.core.service.ServiceManager;
 import com.tmall.wireless.tangram.dataparser.concrete.Card;

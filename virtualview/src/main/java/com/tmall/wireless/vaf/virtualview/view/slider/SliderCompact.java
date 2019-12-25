@@ -25,6 +25,7 @@
 package com.tmall.wireless.vaf.virtualview.view.slider;
 
 import android.util.Log;
+
 import com.libra.Utils;
 import com.libra.expr.common.ExprCode;
 import com.libra.virtualview.common.StringBase;
@@ -33,11 +34,10 @@ import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.core.NativeViewBase;
 import com.tmall.wireless.vaf.virtualview.core.ViewBase;
 import com.tmall.wireless.vaf.virtualview.core.ViewCache;
-import org.json.JSONObject;
 
 /**
  * Created by gujicheng on 16/12/15.
- * The new Slide is implemented with Scroller and controlled with {@link android.support.v7.widget.LinearSnapHelper}, see {@link Slider}. <br />
+ * The new Slide is implemented with Scroller and controlled with {@link androidx.recyclerview.widget.LinearSnapHelper}, see {@link Slider}. <br />
  * This is reserved for app build with old support library.
  */
 public class SliderCompact extends NativeViewBase implements SliderView.Listener {

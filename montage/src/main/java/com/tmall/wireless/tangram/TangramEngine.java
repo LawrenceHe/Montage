@@ -24,23 +24,18 @@
 
 package com.tmall.wireless.tangram;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.Pair;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.vlayout.LayoutHelper;
 import com.alibaba.android.vlayout.Range;
 import com.alibaba.android.vlayout.VirtualLayoutManager;
-
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Pair;
-import android.view.View;
 import com.tmall.wireless.tangram.dataparser.DataParser;
 import com.tmall.wireless.tangram.dataparser.IAdapterBuilder;
 import com.tmall.wireless.tangram.dataparser.concrete.Card;
@@ -66,10 +61,18 @@ import com.tmall.wireless.tangram.support.SimpleClickSupport;
 import com.tmall.wireless.tangram.support.async.CardLoadSupport;
 import com.tmall.wireless.tangram.util.Predicate;
 import com.tmall.wireless.vaf.virtualview.core.ViewCache;
-import io.reactivex.functions.Consumer;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+import io.reactivex.functions.Consumer;
 
 /**
  * Created by villadora on 15/8/24.

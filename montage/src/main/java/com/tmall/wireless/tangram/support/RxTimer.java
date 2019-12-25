@@ -24,15 +24,16 @@
 
 package com.tmall.wireless.tangram.support;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-
-import android.support.annotation.NonNull;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.tmall.wireless.tangram.support.HandlerTimer.TimerStatus;
 import com.tmall.wireless.tangram.support.TimerSupport.OnTickListener;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

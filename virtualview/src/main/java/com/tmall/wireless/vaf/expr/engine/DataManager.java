@@ -24,13 +24,13 @@
 
 package com.tmall.wireless.vaf.expr.engine;
 
-import android.support.annotation.Keep;
 import android.text.TextUtils;
+
+import androidx.annotation.Keep;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 

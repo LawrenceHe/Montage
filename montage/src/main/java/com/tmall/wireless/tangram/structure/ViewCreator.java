@@ -25,10 +25,11 @@
 package com.tmall.wireless.tangram.structure;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 
 import com.tmall.wireless.tangram.TangramBuilder;
 

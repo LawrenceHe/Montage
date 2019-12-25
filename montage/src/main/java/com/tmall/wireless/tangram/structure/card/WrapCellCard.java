@@ -24,10 +24,12 @@
 
 package com.tmall.wireless.tangram.structure.card;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+
 import com.tmall.wireless.tangram.MVHelper;
 import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.dataparser.concrete.Style;
+
 import org.json.JSONObject;
 
 /**

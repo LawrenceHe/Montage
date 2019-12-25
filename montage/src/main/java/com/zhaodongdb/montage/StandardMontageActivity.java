@@ -4,15 +4,16 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
@@ -33,8 +34,8 @@ import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
 import com.zhaodongdb.common.network.HttpRequestHelper;
 import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
-import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.network.ZDHttpFailure;
+import com.zhaodongdb.common.network.ZDHttpResponse;
 
 import org.json.JSONArray;
 import org.json.JSONException;

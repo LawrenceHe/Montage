@@ -24,6 +24,14 @@
 
 package com.tmall.wireless.tangram;
 
+import android.content.Context;
+import android.view.View;
+import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.android.vlayout.extend.PerformanceMonitor;
 import com.tmall.wireless.tangram.dataparser.DataParser;
 import com.tmall.wireless.tangram.dataparser.IAdapterBuilder;
@@ -66,12 +74,6 @@ import com.tmall.wireless.tangram.util.Preconditions;
 import com.tmall.wireless.tangram.util.TangramViewMetrics;
 import com.tmall.wireless.tangram.view.BannerView;
 import com.tmall.wireless.tangram.view.LinearScrollView;
-
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.ImageView;
 import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.framework.ViewManager;
 
@@ -501,7 +503,7 @@ public class TangramBuilder {
         }
 
         /**
-         * @return a {@link TangramBuilder} instance to bind {@link android.support.v7.widget.RecyclerView}, data.
+         * @return a {@link TangramBuilder} instance to bind {@link RecyclerView}, data.
          */
         public TangramEngine build() {
 

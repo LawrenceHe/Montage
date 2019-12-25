@@ -24,19 +24,21 @@
 
 package com.tmall.wireless.tangram.support;
 
+import android.util.Log;
+import android.view.View;
+
+import androidx.annotation.NonNull;
+
+import com.tmall.wireless.tangram.dataparser.concrete.Card;
+import com.tmall.wireless.tangram.structure.BaseCell;
+import com.tmall.wireless.tangram.util.LogUtils;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.View;
-import com.tmall.wireless.tangram.dataparser.concrete.Card;
-import com.tmall.wireless.tangram.structure.BaseCell;
-import com.tmall.wireless.tangram.util.LogUtils;
 
 /**
  *

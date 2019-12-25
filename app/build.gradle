@@ -15,6 +15,7 @@ android {
     buildToolsVersion System.properties['buildToolsVersion']
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.zhaodongdb.wireless"
         minSdkVersion Integer.parseInt(System.properties['minSdkVersion'])
         targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'])
@@ -44,12 +45,18 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 dependencies {
     implementation project(':montage')
     implementation project(':common')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.facebook.react:react-native:+"  // From node_modules
 //    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 //    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
     annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"

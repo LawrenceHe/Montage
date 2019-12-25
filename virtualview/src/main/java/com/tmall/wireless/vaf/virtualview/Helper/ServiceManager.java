@@ -27,7 +27,7 @@ package com.tmall.wireless.vaf.virtualview.Helper;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Use for communicate with outside class.

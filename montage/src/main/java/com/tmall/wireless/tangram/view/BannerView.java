@@ -24,20 +24,11 @@
 
 package com.tmall.wireless.tangram.view;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.alibaba.android.vlayout.VirtualLayoutManager;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.GradientDrawable;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -48,6 +39,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.alibaba.android.vlayout.VirtualLayoutManager;
 import com.tmall.ultraviewpager.TimerHandler;
 import com.tmall.wireless.tangram.core.R;
 import com.tmall.wireless.tangram.core.adapter.BinderViewHolder;
@@ -62,7 +60,11 @@ import com.tmall.wireless.tangram.structure.view.ITangramViewLifeCycle;
 import com.tmall.wireless.tangram.support.BannerSupport;
 import com.tmall.wireless.tangram.util.ImageUtils;
 import com.tmall.wireless.tangram.util.Utils;
+
 import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by mikeafc on 16/1/14.

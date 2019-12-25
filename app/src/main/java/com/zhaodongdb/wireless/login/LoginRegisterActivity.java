@@ -2,11 +2,12 @@ package com.zhaodongdb.wireless.login;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;

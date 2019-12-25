@@ -1,7 +1,7 @@
 package com.zhaodongdb.common.router;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 

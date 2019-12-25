@@ -24,10 +24,10 @@
 
 package com.tmall.wireless.vaf.virtualview.view.page;
 
-import android.graphics.Bitmap;
-import android.support.annotation.Keep;
 import android.util.Log;
-import android.view.View;
+
+import androidx.annotation.Keep;
+
 import com.libra.expr.common.ExprCode;
 import com.libra.virtualview.common.StringBase;
 import com.libra.virtualview.common.ViewBaseCommon;
@@ -40,7 +40,6 @@ import com.tmall.wireless.vaf.virtualview.core.ViewCache;
 import com.tmall.wireless.vaf.virtualview.core.ViewCache.Item;
 import com.tmall.wireless.vaf.virtualview.event.EventData;
 import com.tmall.wireless.vaf.virtualview.event.EventManager;
-import org.json.JSONObject;
 
 /**
  * Created by gujicheng on 16/10/26.
