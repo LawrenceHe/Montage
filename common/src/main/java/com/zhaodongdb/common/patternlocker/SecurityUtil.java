@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless.patternlocker;
+package com.zhaodongdb.common.patternlocker;
 
 import java.io.UnsupportedEncodingException;
 

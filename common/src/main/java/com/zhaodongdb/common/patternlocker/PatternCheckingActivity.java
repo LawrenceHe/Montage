@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless.patternlocker;
+package com.zhaodongdb.common.patternlocker;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -7,13 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.zhaodongdb.common.R;
+import com.zhaodongdb.common.R2;
 import com.zhaodongdb.common.component.BaseActivity;
-import com.zhaodongdb.common.patternlocker.DefaultLockerNormalCellView;
-import com.zhaodongdb.common.patternlocker.DefaultStyleDecorator;
-import com.zhaodongdb.common.patternlocker.OnPatternChangeListener;
-import com.zhaodongdb.common.patternlocker.PatternIndicatorView;
-import com.zhaodongdb.common.patternlocker.PatternLockerView;
-import com.zhaodongdb.wireless.R;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -22,16 +18,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-@Route(path = "/app/patternlocker/setting")
-public class PatternSettingActivity extends BaseActivity {
+@Route(path="/common/patternlocker/checking")
+public class PatternCheckingActivity extends BaseActivity {
 
-    @BindView(R.id.patternLockerView)
+    @BindView(R2.id.patternLockerView)
     PatternLockerView patternLockerView;
 
-    @BindView(R.id.patternIndicatorView)
+    @BindView(R2.id.patternIndicatorView)
     PatternIndicatorView patternIndicatorView;
 
-    @BindView(R.id.textMsg)
+    @BindView(R2.id.textMsg)
     TextView textMsg;
 
     private PatternHelper patternHelper = null;
@@ -39,16 +35,16 @@ public class PatternSettingActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_whole_pattern_setting);
+        setContentView(R.layout.activity_whole_pattern_checking);
         ButterKnife.bind(this);
 
-        DefaultStyleDecorator decorator = ((DefaultLockerNormalCellView)patternLockerView.getNormalCellView()).getStyleDecorator();
+        DefaultStyleDecorator decorator = ((DefaultLockerNormalCellView)this.patternLockerView.getNormalCellView()).getStyleDecorator();
 
-        patternLockerView.setHitCellView(new RippleLockerHitCellView()
+        this.patternLockerView.setHitCellView(new RippleLockerHitCellView()
                 .setHitColor(decorator.getHitColor())
                 .setErrorColor(decorator.getErrorColor()));
 
-        patternLockerView.setOnPatternChangedListener(new OnPatternChangeListener() {
+        this.patternLockerView.setOnPatternChangedListener(new OnPatternChangeListener() {
             @Override
             public void onStart(@NotNull PatternLockerView view) {
 
@@ -61,11 +57,10 @@ public class PatternSettingActivity extends BaseActivity {
 
             @Override
             public void onComplete(@NotNull PatternLockerView view, @NotNull List<Integer> hitIndexList) {
-                boolean isOk = isPatternOk(hitIndexList);
-                view.updateStatus(!isOk);
-                patternIndicatorView.updateState(hitIndexList, !isOk);
+                boolean isError = !isPatternOk(hitIndexList);
+                view.updateStatus(isError);
+                patternIndicatorView.updateState(hitIndexList, isError);
                 updateMsg();
-                patternLockerView.clearHitState();
             }
 
             @Override
@@ -79,7 +74,7 @@ public class PatternSettingActivity extends BaseActivity {
     }
 
     private boolean isPatternOk(List<Integer> hitIndexList) {
-        this.patternHelper.validateForSetting(hitIndexList);
+        this.patternHelper.validateForChecking(hitIndexList);
         return this.patternHelper.isOk();
     }
 

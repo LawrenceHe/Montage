@@ -1,4 +1,4 @@
-package com.zhaodongdb.wireless.patternlocker;
+package com.zhaodongdb.common.patternlocker;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;

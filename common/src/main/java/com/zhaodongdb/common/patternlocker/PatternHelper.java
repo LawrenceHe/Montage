@@ -1,6 +1,9 @@
-package com.zhaodongdb.wireless.patternlocker;
+package com.zhaodongdb.common.patternlocker;
 
 import android.text.TextUtils;
+
+import com.zhaodongdb.common.patternlocker.SecurityUtil;
+import com.zhaodongdb.common.patternlocker.SharedPreferencesUtil;
 
 import java.util.List;
 
