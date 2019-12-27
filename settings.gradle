@@ -1,2 +1,2 @@
-include ':app', ':montage', ':virtualview', ':virtualcommon', ':common'
+include ':app', ':montage', ':virtualview', ':virtualcommon', ':common', ':reactnative'
 rootProject.name='ZhaodongDBApp'

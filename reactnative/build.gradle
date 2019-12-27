@@ -1,0 +1,46 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion Integer.parseInt(System.properties['compileSdkVersion'])
+    buildToolsVersion System.properties['buildToolsVersion']
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(System.properties['minSdkVersion'])
+        targetSdkVersion Integer.parseInt(System.properties['targetSdkVersion'])
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+
+        // Support ARouter
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+def hermesPath = "$rootDir/node_modules/hermes-engine/android/"
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api "com.facebook.react:react-native:0.61.5"  // From node_modules
+    debugImplementation files(hermesPath + "hermes-debug.aar")
+    releaseImplementation files(hermesPath + "hermes-release.aar")
+    implementation 'org.webkit:android-jsc:+'
+    implementation project(':common')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
