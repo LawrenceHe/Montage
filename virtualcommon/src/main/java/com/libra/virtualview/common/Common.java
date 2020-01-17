@@ -110,7 +110,9 @@ public class Common {
             try {
                 ret = true;
                 int v = 0;
-                if (TextUtils.equals("black", value.mStrValue)) {
+                if (value.mStrValue.startsWith("#")) {
+                    v = Color.parseColor(value.mStrValue);
+                } else if (TextUtils.equals("black", value.mStrValue)) {
                     v = Color.BLACK;
                 } else if (TextUtils.equals("blue", value.mStrValue)) {
                     v = Color.BLUE;

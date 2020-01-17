@@ -1,6 +1,8 @@
-package com.zhaodongdb.wireless.fragment.home;
+package com.zhaodongdb.wireless.home;
 
 import android.content.Context;
+
+import com.tmall.wireless.tangram.TangramEngine;
 
 /**
  * @author cginechen
@@ -9,8 +11,8 @@ import android.content.Context;
 
 public class MainFortuneController extends HomeController {
 
-    public MainFortuneController(Context context) {
-        super(context);
+    public MainFortuneController(Context context, String pageName, TangramEngine engine) {
+        super(context, pageName, engine);
     }
 
     @Override

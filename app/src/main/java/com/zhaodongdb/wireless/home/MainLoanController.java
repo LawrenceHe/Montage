@@ -1,16 +1,18 @@
-package com.zhaodongdb.wireless.fragment.home;
+package com.zhaodongdb.wireless.home;
 
 import android.content.Context;
+
+import com.tmall.wireless.tangram.TangramEngine;
 
 /**
  * @author cginechen
  * @date 2016-10-20
  */
 
-public class MainMineController extends HomeController {
+public class MainLoanController extends HomeController {
 
-    public MainMineController(Context context) {
-        super(context);
+    public MainLoanController(Context context, String pageName, TangramEngine engine) {
+        super(context, pageName, engine);
     }
 
     @Override

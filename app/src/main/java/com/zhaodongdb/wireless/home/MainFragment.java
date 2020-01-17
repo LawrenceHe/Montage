@@ -1,22 +1,30 @@
-package com.zhaodongdb.wireless.fragment.home;
+package com.zhaodongdb.wireless.home;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
+import com.squareup.picasso.Picasso;
+import com.tmall.wireless.tangram.TangramBuilder;
+import com.tmall.wireless.tangram.TangramEngine;
+import com.tmall.wireless.tangram.util.IInnerImageSetter;
 import com.zhaodongdb.wireless.R;
-import com.zhaodongdb.wireless.fragment.BaseFragment;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +41,7 @@ public class MainFragment extends BaseFragment {
     ViewPager mViewPager;
     @BindView(R.id.tabs)
     QMUITabSegment mTabSegment;
-    private HashMap<Pager, HomeController> mPages;
+    private Map<Pager, HomeController> mPages;
     private PagerAdapter mPagerAdapter = new PagerAdapter() {
 
         private int mChildCount = 0;
@@ -76,7 +84,6 @@ public class MainFragment extends BaseFragment {
         }
     };
 
-
     @Override
     protected View onCreateView() {
         FrameLayout layout = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
@@ -84,6 +91,18 @@ public class MainFragment extends BaseFragment {
         initTabs();
         initPagers();
         return layout;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        for (Map.Entry<Pager, HomeController> entry : mPages.entrySet()) {
+            TangramEngine engine = entry.getValue().getEngine();
+            if (engine != null) {
+                engine.destroy();
+            }
+        }
     }
 
     private void initTabs() {
@@ -154,6 +173,19 @@ public class MainFragment extends BaseFragment {
 
     private void initPagers() {
 
+        final Context appContext = getActivity();
+
+        //Step 1: init tangram
+        TangramBuilder.init(appContext, new IInnerImageSetter() {
+            @Override
+            public <IMAGE extends ImageView> void doLoadImageUrl(@NonNull IMAGE view,
+                                                                 @Nullable String url) {
+                Picasso.with(appContext).load(url).into(view);
+            }
+        }, ImageView.class);
+        //Step 2: register build=in cells and cards
+        TangramBuilder.InnerBuilder montageBuilder = TangramBuilder.newInnerBuilder(appContext);
+
         HomeController.HomeControlListener listener = new HomeController.HomeControlListener() {
             @Override
             public void startFragment(BaseFragment fragment) {
@@ -163,23 +195,23 @@ public class MainFragment extends BaseFragment {
 
         mPages = new HashMap<>();
 
-        HomeController homeController = new MainHomeController(getActivity());
+        HomeController homeController = new MainHomeController(getActivity(), "home", montageBuilder.build());
         homeController.setHomeControlListener(listener);
         mPages.put(Pager.HOME, homeController);
 
-        HomeController fortuneController = new MainFortuneController(getActivity());
+        HomeController fortuneController = new MainFortuneController(getActivity(), "fortune", montageBuilder.build());
         fortuneController.setHomeControlListener(listener);
         mPages.put(Pager.FORTUNE, fortuneController);
 
-        HomeController shoppingController = new MainShoppingController(getActivity());
+        HomeController shoppingController = new MainShoppingController(getActivity(), "mall", montageBuilder.build());
         shoppingController.setHomeControlListener(listener);
         mPages.put(Pager.SHOPPING, shoppingController);
 
-        HomeController loanController = new MainLoanController(getActivity());
+        HomeController loanController = new MainLoanController(getActivity(), "loan", montageBuilder.build());
         loanController.setHomeControlListener(listener);
         mPages.put(Pager.LOAN, loanController);
 
-        HomeController mineController = new MainMineController(getActivity());
+        HomeController mineController = new MainMineController(getActivity(), "mine", montageBuilder.build());
         mineController.setHomeControlListener(listener);
         mPages.put(Pager.MINE, mineController);
 

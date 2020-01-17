@@ -33,10 +33,14 @@ import com.tmall.wireless.vaf.framework.VafContext;
 import com.tmall.wireless.vaf.virtualview.Helper.ImageLoader;
 import com.tmall.wireless.vaf.virtualview.event.EventManager;
 import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
+import com.zhaodongdb.common.network.HttpRequestHelper;
+import com.zhaodongdb.common.network.RequestUrlsEnum;
+import com.zhaodongdb.common.network.Result;
 import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpFailure;
 import com.zhaodongdb.common.network.ZDHttpResponse;
+import com.zhaodongdb.common.utils.ThreadUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -137,7 +141,8 @@ public class DebugMontageActivity extends AppCompatActivity {
         });
         engine.getLayoutManager().setFixOffset(0, 40, 0, 0);
         Utils.setUedScreenWidth(720);
-        refreshByName();
+//        refreshByName();
+        refreshFromRemoteServer();
     }
 
     @Override
@@ -185,7 +190,6 @@ public class DebugMontageActivity extends AppCompatActivity {
                 });
             }
         });
-
     }
 
     private void loadTemplates(PageData data){
@@ -200,6 +204,52 @@ public class DebugMontageActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void refreshFromRemoteServer() {
+
+        Map<String, String> body = new HashMap<>();
+        body.put("pageName", "loan");
+        ZDHttpClient.getInstance().asyncPost(
+                RequestUrlsEnum.MONTAGE_PAGE.getEnvUrl(),
+                HttpRequestHelper.buildJsonRequest(body),
+                new ZDHttpCallback() {
+
+                    @Override
+                    public void onFailure(ZDHttpFailure failure) {
+                        Log.d(TAG, "get page info failure");
+                    }
+
+                    @Override
+                    public void onResponse(final ZDHttpResponse response) throws IOException {
+
+                        final Result<JSONObject> result = HttpRequestHelper.parseHttpResponse(response.getResponseString(), JSONObject.class);
+                        final JSONObject data = result.getData().getJSONObject("data");
+
+                        ThreadUtils.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                JSONObject templates = data.getJSONObject("templates");
+                                for(Map.Entry<String, Object> template : templates.entrySet()) {
+                                    //i++;
+
+                                    Log.d(TAG, "key:" + template.getKey() + " value:" + template.getValue().toString());
+                                    engine.registerVirtualViewTemplate(
+                                            template.getKey(),
+                                            Base64.decode(template.getValue().toString(), Base64.DEFAULT));
+                                }
+
+                                try {
+                                    JSONArray array = new JSONArray(data.getJSONArray("cards").toString());
+                                    engine.setData(array);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                });
     }
 
     @Override

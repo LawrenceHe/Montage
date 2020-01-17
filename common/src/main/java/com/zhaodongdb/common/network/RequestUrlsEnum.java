@@ -9,6 +9,7 @@ public enum RequestUrlsEnum {
     LOGIN_BY_MOBILE("MAPI/sign/loginByMobile.json"),
     LOGIN_MESSAGE_TOKEN("MAPI/sign/getMessageToken.json"),
     LOGIN_BY_GESTURE("MAPI/sign/loginByGesture.json"),
+    MONTAGE_PAGE("MAPI/page/getPageInfo.json"),
 
     //====================
     ENUM_END("");

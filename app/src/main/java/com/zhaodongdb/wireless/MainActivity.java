@@ -14,7 +14,7 @@ import com.qmuiteam.qmui.arch.annotation.LatestVisitRecord;
 import com.zhaodongdb.common.debug.FloatDebugView;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.utils.DeviceUtil;
-import com.zhaodongdb.wireless.fragment.home.MainFragment;
+import com.zhaodongdb.wireless.home.MainFragment;
 
 @FirstFragments(
         value = {

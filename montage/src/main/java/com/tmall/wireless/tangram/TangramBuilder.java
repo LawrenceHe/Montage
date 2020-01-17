@@ -228,7 +228,9 @@ public class TangramBuilder {
 
     protected static final String TYPE_X_COLUMN_COMPACT = "1033";
 
-    public static final String TYPE_CONTAINER_FLOW = "container-flow";
+    // TODO: 为了兼容iOS的临时调整卡片名字，后面要恢复原状
+    // public static final String TYPE_CONTAINER_FLOW = "container-flow";
+    public static final String TYPE_CONTAINER_FLOW = "flow-container";
 
     public static final String TYPE_CONTAINER_1C_FLOW = "container-oneColumn";
 
