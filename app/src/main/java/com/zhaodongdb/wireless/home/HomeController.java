@@ -92,13 +92,13 @@ public abstract class HomeController extends QMUIWindowInsetLayout {
             public void bindImage(String uri, final ImageBase imageBase, int reqWidth, int reqHeight) {
                 try {
                     RequestCreator requestCreator;
-                    if (uri.startsWith("http")) {
+                    if (uri == null || uri.startsWith("http")) {
                         requestCreator = Picasso.with(appContext).load(uri);
                     } else {
                         int resId = getResources().getIdentifier(uri, "drawable" , appContext.getPackageName());
                         requestCreator = Picasso.with(appContext).load(resId);
                     }
-                    Log.d(TAG, "bindImage request width " + reqWidth + " height " + reqHeight + " src " + uri);
+                    Log.d(TAG, "bindImage request width:" + reqWidth + " height:" + reqHeight + " src:" + (uri == null ? "" : uri));
                     if (reqHeight > 0 || reqWidth > 0) {
                         requestCreator.resize(reqWidth, reqHeight);
                     }
@@ -114,13 +114,13 @@ public abstract class HomeController extends QMUIWindowInsetLayout {
             public void getBitmap(String uri, int reqWidth, int reqHeight, final ImageLoader.Listener lis) {
                 try {
                     RequestCreator requestCreator;
-                    if (uri.startsWith("http")) {
+                    if (uri == null || uri.startsWith("http")) {
                         requestCreator = Picasso.with(appContext).load(uri);
                     } else {
                         int resId = getResources().getIdentifier(uri, "drawable" , appContext.getPackageName());
                         requestCreator = Picasso.with(appContext).load(resId);
                     }
-                    Log.d(TAG, "getBitmap request width " + reqWidth + " height " + reqHeight + " src " + uri);
+                    Log.d(TAG, "getBitmap request width:" + reqWidth + " height:" + reqHeight + " src:" + (uri == null ? "" : uri));
                     if (reqHeight > 0 || reqWidth > 0) {
                         requestCreator.resize(reqWidth, reqHeight);
                     }
