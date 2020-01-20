@@ -90,26 +90,46 @@ public abstract class HomeController extends QMUIWindowInsetLayout {
 
             @Override
             public void bindImage(String uri, final ImageBase imageBase, int reqWidth, int reqHeight) {
-                RequestCreator requestCreator = Picasso.with(appContext).load(uri);
-                Log.d(TAG, "bindImage request width height " + reqHeight + " " + reqWidth);
-                if (reqHeight > 0 || reqWidth > 0) {
-                    requestCreator.resize(reqWidth, reqHeight);
+                try {
+                    RequestCreator requestCreator;
+                    if (uri.startsWith("http")) {
+                        requestCreator = Picasso.with(appContext).load(uri);
+                    } else {
+                        int resId = getResources().getIdentifier(uri, "drawable" , appContext.getPackageName());
+                        requestCreator = Picasso.with(appContext).load(resId);
+                    }
+                    Log.d(TAG, "bindImage request width " + reqWidth + " height " + reqHeight + " src " + uri);
+                    if (reqHeight > 0 || reqWidth > 0) {
+                        requestCreator.resize(reqWidth, reqHeight);
+                    }
+                    ImageTarget imageTarget = new ImageTarget(imageBase);
+                    cache.add(imageTarget);
+                    requestCreator.into(imageTarget);
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "bind image error." + e.getMessage() + "src:" + uri);
                 }
-                ImageTarget imageTarget = new ImageTarget(imageBase);
-                cache.add(imageTarget);
-                requestCreator.into(imageTarget);
             }
 
             @Override
             public void getBitmap(String uri, int reqWidth, int reqHeight, final ImageLoader.Listener lis) {
-                RequestCreator requestCreator = Picasso.with(appContext).load(uri);
-                Log.d(TAG, "getBitmap request width height " + reqHeight + " " + reqWidth);
-                if (reqHeight > 0 || reqWidth > 0) {
-                    requestCreator.resize(reqWidth, reqHeight);
+                try {
+                    RequestCreator requestCreator;
+                    if (uri.startsWith("http")) {
+                        requestCreator = Picasso.with(appContext).load(uri);
+                    } else {
+                        int resId = getResources().getIdentifier(uri, "drawable" , appContext.getPackageName());
+                        requestCreator = Picasso.with(appContext).load(resId);
+                    }
+                    Log.d(TAG, "getBitmap request width " + reqWidth + " height " + reqHeight + " src " + uri);
+                    if (reqHeight > 0 || reqWidth > 0) {
+                        requestCreator.resize(reqWidth, reqHeight);
+                    }
+                    ImageTarget imageTarget = new ImageTarget(lis);
+                    cache.add(imageTarget);
+                    requestCreator.into(imageTarget);
+                } catch (IllegalArgumentException e) {
+                    Log.e(TAG, "get bitmap error." + e.getMessage() + "src:" + uri);
                 }
-                ImageTarget imageTarget = new ImageTarget(lis);
-                cache.add(imageTarget);
-                requestCreator.into(imageTarget);
             }
         });
         engine.getService(VafContext.class).getEventManager().register(EventManager.TYPE_Click, new VirtualViewEventProcessor());

@@ -1,7 +1,7 @@
 package com.zhaodongdb.wireless.fragment;
 
 import com.qmuiteam.qmui.arch.QMUIFragment;
-import com.zhaodongdb.wireless.fragment.home.MainFragment;
+import com.zhaodongdb.wireless.home.MainFragment;
 
 /**
  * Created by cgspine on 2018/1/7.

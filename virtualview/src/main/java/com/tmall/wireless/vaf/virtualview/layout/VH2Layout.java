@@ -83,7 +83,7 @@ public class VH2Layout extends VHLayout {
                         leftStart += childP.mLayoutMarginLeft;
                         left = leftStart;
                         leftStart += w + childP.mLayoutMarginRight;
-                        Log.e(TAG, "onComLayout HORIZONTAL direction invalidate:" + childP.mLayoutDirection);
+                        Log.w(TAG, "onComLayout HORIZONTAL direction invalidate:" + childP.mLayoutDirection);
                     }
 
                     int tt;
@@ -128,7 +128,7 @@ public class VH2Layout extends VHLayout {
                         topStart += childP.mLayoutMarginTop;
                         top = topStart;
                         topStart += h + childP.mLayoutMarginBottom;
-                        Log.e(TAG, "onComLayout VERTICAL direction invalidate:" + childP.mLayoutDirection);
+                        Log.w(TAG, "onComLayout VERTICAL direction invalidate:" + childP.mLayoutDirection);
                     }
 
                     int ll;
