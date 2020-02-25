@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.libra.TextUtils;
 import com.libra.Utils;
 import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -90,9 +91,12 @@ public abstract class HomeController extends QMUIWindowInsetLayout {
 
             @Override
             public void bindImage(String uri, final ImageBase imageBase, int reqWidth, int reqHeight) {
+                if (TextUtils.isEmpty(uri)) {
+                    return;
+                }
                 try {
                     RequestCreator requestCreator;
-                    if (uri == null || uri.startsWith("http")) {
+                    if (uri.startsWith("http")) {
                         requestCreator = Picasso.with(appContext).load(uri);
                     } else {
                         int resId = getResources().getIdentifier(uri, "drawable" , appContext.getPackageName());
@@ -112,9 +116,12 @@ public abstract class HomeController extends QMUIWindowInsetLayout {
 
             @Override
             public void getBitmap(String uri, int reqWidth, int reqHeight, final ImageLoader.Listener lis) {
+                if (TextUtils.isEmpty(uri)) {
+                    return;
+                }
                 try {
                     RequestCreator requestCreator;
-                    if (uri == null || uri.startsWith("http")) {
+                    if (uri.startsWith("http")) {
                         requestCreator = Picasso.with(appContext).load(uri);
                     } else {
                         int resId = getResources().getIdentifier(uri, "drawable" , appContext.getPackageName());

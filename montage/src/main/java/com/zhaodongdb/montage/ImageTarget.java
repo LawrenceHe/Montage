@@ -11,6 +11,8 @@ import com.tmall.wireless.vaf.virtualview.view.image.ImageBase;
 
 public class ImageTarget implements Target {
 
+    static final String TAG = "ImageTarget";
+
     ImageBase mImageBase;
 
     ImageLoader.Listener mListener;
@@ -29,7 +31,7 @@ public class ImageTarget implements Target {
         if (mListener != null) {
             mListener.onImageLoadSuccess(bitmap);
         }
-        Log.d("TangramActivity", "onBitmapLoaded " + from);
+        Log.d(TAG, "onBitmapLoaded " + from);
     }
 
     @Override
@@ -37,11 +39,11 @@ public class ImageTarget implements Target {
         if (mListener != null) {
             mListener.onImageLoadFailed();
         }
-        Log.d("TangramActivity", "onBitmapFailed ");
+        Log.d(TAG, "onBitmapFailed ");
     }
 
     @Override
     public void onPrepareLoad(Drawable placeHolderDrawable) {
-        Log.d("TangramActivity", "onPrepareLoad ");
+        Log.d(TAG, "onPrepareLoad ");
     }
 }

@@ -247,6 +247,7 @@ public class TangramBuilder {
     public static final String TYPE_CONTAINER_FLOAT = "container-float";
 
     public static final String TYPE_CONTAINER_BANNER = "container-banner";
+//    public static final String TYPE_CONTAINER_SCROLL = "page-container";
 
     public static final String TYPE_CONTAINER_SCROLL = "container-scroll";
 
