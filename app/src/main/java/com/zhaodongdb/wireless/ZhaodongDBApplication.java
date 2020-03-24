@@ -1,5 +1,6 @@
 package com.zhaodongdb.wireless;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.facebook.react.ReactApplication;
@@ -7,7 +8,10 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.jd.jrapp.push.IJRPush;
+import com.jd.jrapp.push.PushManager;
 import com.zhaodongdb.common.component.BaseApplication;
+import com.zhaodongdb.common.utils.DeviceUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -46,6 +50,57 @@ public class ZhaodongDBApplication extends BaseApplication implements ReactAppli
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 初始化JRPush
+        PushManager.push = new IJRPush() {
+            @Override
+            public Application getApplication() {
+                return getInstance();
+            }
+
+            @Override
+            public String BASE_COMMON_SURL() {
+                return null;
+            }
+
+            @Override
+            public boolean isLogin() {
+                return true;
+            }
+
+            @Override
+            public String jdPin() {
+                return "user1234567890";
+            }
+
+            @Override
+            public String imEi() {
+                return DeviceUtil.getDeviceID();
+            }
+
+            @Override
+            public String appId() {
+                return null;
+            }
+
+            @Override
+            public String appSecret() {
+                return null;
+            }
+
+            @Override
+            public String appVersion() {
+                return DeviceUtil.getAppVersion();
+            }
+
+            @Override
+            public String storeSource() {
+                return "unknown";
+            }
+        };
+        PushManager.getInstance().setType(1);
+        PushManager.getInstance().initAndGetToken("", "");
+
         SoLoader.init(this, /* native exopackage */ false);
         initializeFlipper(this); // Remove this line if you don't want Flipper enabled
     }

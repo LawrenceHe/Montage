@@ -17,7 +17,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup,android:supportsRtl"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="173fade7-4532-4d31-938c-d28963931888"/>
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="10688"/>
+
         <activity
             android:name=".LauncherActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">

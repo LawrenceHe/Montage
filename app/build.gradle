@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'com.huawei.agconnect'
 //apply plugin: 'kotlin-kapt'
 //
 //kapt {
@@ -73,7 +74,7 @@ dependencies {
     implementation project(':montage')
     implementation project(':common')
     implementation project(':reactnative')
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 //    kapt "com.alibaba:arouter-compiler:$arouter_compiler_version"
 //    kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
     annotationProcessor "com.alibaba:arouter-compiler:$arouter_compiler_version"
