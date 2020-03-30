@@ -27,7 +27,7 @@ public class BridgeUtil {
 	 */
     public static void webViewLoadLocalJs(WebView view, String path){
         String jsContent = assetFile2Str(view.getContext(), path);
-        view.loadUrl("javascript:" + jsContent);
+        view.evaluateJavascript("javascript:" + jsContent, null);
     }
 
 	/**
