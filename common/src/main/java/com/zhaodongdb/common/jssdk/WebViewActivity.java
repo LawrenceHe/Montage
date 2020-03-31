@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.fastjson.JSONObject;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.zhaodongdb.common.R;
 import com.zhaodongdb.common.R2;
@@ -25,6 +26,11 @@ public class WebViewActivity extends BaseActivity {
 
     @BindView(R2.id.webview)
     BridgeWebView webView;
+
+    static class User {
+        public String name;
+        public Integer age;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +57,17 @@ public class WebViewActivity extends BaseActivity {
                 function.onCallBack("submitFromWeb, callback data from native");
             }
 
+        });
+
+        User user = new User();
+        user.name = "lawrence";
+        user.age = 30;
+        String data = JSONObject.toJSONString(user);
+        webView.callJavascriptFunction("functionInJs", data, new CallBackFunction() {
+            @Override
+            public void onCallBack(String data) {
+
+            }
         });
     }
 }

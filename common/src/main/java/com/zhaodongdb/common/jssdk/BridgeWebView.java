@@ -149,7 +149,10 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge{
 	public void onCallbackFromJavascript(String callbackId, String data) {
 		if (!TextUtils.isEmpty(callbackId)) {
 			CallBackFunction callBackFunction = callbackMap.get(callbackId);
-			callBackFunction.onCallBack(data);
+			if (callBackFunction != null) {
+				callBackFunction.onCallBack(data);
+			}
+			callbackMap.remove(callbackId);
 		}
 	}
 

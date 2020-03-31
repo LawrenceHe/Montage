@@ -32,6 +32,10 @@
         messageHandlers[handlerName] = handler;
     }
 
+    function unregisterHandler(handlerName, handler) {
+        delete messageHandlers[handlerName];
+    }
+
     function callNativeFunction(method, data, callback) {
         if (data) {
             var param = encodeURIComponent(JSON.stringify(data));
@@ -52,7 +56,6 @@
     function handleCallFromNative(method, data, callbackId) {
         setTimeout(function () {
             if (callbackId) {
-                
                 callback = function(data) {
                     callbackToNative(callbackId, data);
                 };
@@ -77,17 +80,21 @@
     }
     
     function onCallbackFromNative(callbackId, data) {
+        if (!callbackId) {
+            return;
+        }
         var callback = callbackMap[callbackId];
         if (!callback) {
             return;
         }
-
         callback(data);
+        delete callbackMap[callbackId];
     }
 
     var WebViewJavascriptBridge = window.WebViewJavascriptBridge = {
         init: init,
         registerHandler: registerHandler,
+        unregisterHandler: unregisterHandler,
         handleCallFromNative: handleCallFromNative,
         onCallbackFromNative: onCallbackFromNative,
         callNativeFunction: callNativeFunction
