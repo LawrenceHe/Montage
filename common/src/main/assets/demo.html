@@ -5,11 +5,15 @@
         <title>
             js调用java
         </title>
+        <script src="./ZhaodongJsSdk.js"></script>
     </head>
     <body>
         <p id="show"></p>
         <p>
             <input type="button" id="callnative" value="调用Native方法" onclick="testCallNative();" />
+        </p>
+        <p>
+            <input type="button" id="getAppVersion" value="获取版本号" onclick="testGetAppVersion();" />
         </p>
     </body>
     <script>
@@ -23,6 +27,12 @@
                 }
             );
         }
+
+        function testGetAppVersion() {
+            var appVersion = zhaodongJsSdk.getAppVersion();
+            console.log("app version:" + appVersion);
+        }
+
 
         function bridgeLog(logContent) {
             document.getElementById("show").innerHTML = logContent;

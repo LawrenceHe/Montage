@@ -329,7 +329,7 @@ public class DeviceUtil {
         for (ActivityManager.RunningAppProcessInfo runningAppProcessInfo : runningAppProcessesList) {
             // 进程名
             String processName = runningAppProcessInfo.processName;
-            if (processName.equalsIgnoreCase("ctrip.android.view")) {
+            if (processName.equalsIgnoreCase("com.zhaodongdb.wireless")) {
                 // 进程ID号
                 int pid = runningAppProcessInfo.pid;
                 // 用户ID
@@ -902,7 +902,7 @@ public class DeviceUtil {
                 }
 
                 if (sb.length() > 0) {
-                    sb.append("_CtripAPP_Android_").append(getAppVersion());
+                    sb.append("_ZhaodongDB_Android_").append(getAppVersion());
                 }
 
                 if (sb.length() > 0) {

@@ -59,7 +59,7 @@ public class ZDHttpClient {
     }
 
     /**
-     * 获取CtripHTTPClientV2单例
+     * 获取ZDHttpClient单例
      *
      * @return
      */

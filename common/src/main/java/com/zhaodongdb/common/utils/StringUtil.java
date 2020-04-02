@@ -2085,35 +2085,6 @@ public class StringUtil {
 		return m.matches();
 	}
 
-        public static boolean isCtripURL(String url) {
-			if (!StringUtil.emptyOrNull(url)) {
-				if (url.contains("?")) {
-					url = url.substring(0, url.indexOf("?"));
-				}
-				//只保留字母、数字.:/-，其他都替换成/
-                url = url.replaceAll("[^.:\\-\\/(a-zA-Z0-9)]", "/");
-				String host = Uri.parse(url.toLowerCase()).getHost();
-				if (!TextUtils.isEmpty(host)) {
-					if (host.endsWith(".ctrip.com") || host.endsWith(".ctrip.cn")
-							|| host.endsWith(".ctripcorp.com") || host.endsWith(".xiecheng.com")
-							|| host.endsWith(".lvping.com") || host.endsWith(".toursforfun.com")
-							|| host.endsWith(".eztravel.com.tw") || host.endsWith(".csshotel.com.cn")
-							|| host.endsWith(".wingontravel.com") || host.endsWith(".tieyou.com")
-							|| host.endsWith(".tujia.com") || host.endsWith(".hhtravel.com")
-							|| host.endsWith(".ctripqa.com") || host.endsWith(".iwanoutdoor.com")
-							|| host.endsWith(".youctrip.com") || host.endsWith(".ctripqa.com")
-							|| host.endsWith(".qunar.com") || host.endsWith(".qunarzz.com")
-							|| host.endsWith(".qua.com") || host.endsWith(".c-ctrip.com")
-                            || host.endsWith(".ctripbuy.hk") || host.endsWith(".trip.com")
-                            || host.endsWith(".ctrip.com.cn") || host.endsWith(".ctrip.net")
-							|| host.endsWith("d-ctrip.com")) {
-						return true;
-					}
-				}
-			}
-			return false;
-        }
-
 	/**
 	* URL过滤
 	*/

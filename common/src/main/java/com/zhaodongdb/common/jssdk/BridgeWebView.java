@@ -2,13 +2,14 @@ package com.zhaodongdb.common.jssdk;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.webkit.WebView;
+
+import com.zhaodongdb.common.BuildConfig;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -68,16 +69,16 @@ public class BridgeWebView extends WebView implements WebViewJavascriptBridge{
 		this.setVerticalScrollBarEnabled(false);
 		this.setHorizontalScrollBarEnabled(false);
 		this.getSettings().setJavaScriptEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (BuildConfig.DEBUG) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
 		this.setWebViewClient(generateBridgeWebViewClient());
+        this.setDefaultHandler(defaultHandler);
 	}
 
     protected BridgeWebViewClient generateBridgeWebViewClient() {
         return new BridgeWebViewClient(this);
     }
-
 
 	@Override
 	public void send(String data) {

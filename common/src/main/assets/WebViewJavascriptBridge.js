@@ -1,6 +1,3 @@
-//notation: js file can only use this kind of comments
-//since comments will cause error when use in webview.loadurl,
-//comments will be remove by java use regexp
 (function() {
     console.log("WebViewJavascriptBridge start");
     if (window.WebViewJavascriptBridge) {
@@ -78,7 +75,7 @@
         var param = encodeURIComponent(JSON.stringify(data));
         messagingIframe.src = JSSDK_SCHEMA + "://" + JSSDK_HOST + "/onCallbackFromJavascript" + "?callbackid=" + callbackId + "&param=" + param;
     }
-    
+
     function onCallbackFromNative(callbackId, data) {
         if (!callbackId) {
             return;

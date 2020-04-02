@@ -3,6 +3,7 @@ package com.zhaodongdb.common.jssdk;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
 
 import androidx.annotation.Nullable;
 
@@ -12,6 +13,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.zhaodongdb.common.R;
 import com.zhaodongdb.common.R2;
 import com.zhaodongdb.common.component.BaseActivity;
+import com.zhaodongdb.common.utils.DeviceUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +50,11 @@ public class WebViewActivity extends BaseActivity {
                 finish();
             }
         });
+
+
+        // 设置UserAgent
+        WebSettings settings = webView.getSettings();
+        settings.setUserAgentString(DeviceUtil.getUserAgent());
 
         webView.registerHandler("submitFromWeb", new BridgeHandler() {
 
