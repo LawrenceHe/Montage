@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.realm.Realm;
 
-@Route(path = "/app/loginOrRegister")
+@Route(path = "/app/login")
 public class LoginRegisterActivity extends BaseActivity {
 
     static final String TAG = LoginRegisterActivity.class.getSimpleName();
