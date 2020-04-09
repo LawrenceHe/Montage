@@ -1,9 +1,8 @@
 var zhaodongJsSdk = {
     /**
-    }
      * 判断是否为招东APP
      *
-     * 输入样例：userAgent = Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_4 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G35,(zhaodong 5.5.0/47 v2)
+     * 输入样例：userAgent = Chrome/74.0.3729.185 Mobile Safari/537.36_ZhaodongDB_Android_1.0_cDevice=Android SDK built for x86_cSize=w1440*h2392_
      *
      * 返回样例：true
      */
@@ -15,9 +14,9 @@ var zhaodongJsSdk = {
     /**
      * 获取APP版本号（仅招东APP内）
      *
-     * 输入样例：userAgent = Mozilla/5.0 (iPhone; CPU iPhone OS 9_3_4 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13G35,(zhaodong 5.5.0/47 v2)
+     * 输入样例：userAgent = Chrome/74.0.3729.185 Mobile Safari/537.36_ZhaodongDB_Android_1.0_cDevice=Android SDK built for x86_cSize=w1440*h2392_
      *
-     * 返回样例：5.5.0
+     * 返回样例：1.0.0
      */
     getAppVersion: function(){
         if (this.isZhaodong()){
