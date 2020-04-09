@@ -37,6 +37,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".login.LoginRegisterActivity" />
+        <activity android:name=".patternlocker.PatternSettingActivity" />
+
     </application>
 
 </manifest>

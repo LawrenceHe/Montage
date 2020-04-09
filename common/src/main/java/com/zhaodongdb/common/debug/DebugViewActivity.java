@@ -65,6 +65,7 @@ public class DebugViewActivity extends BaseActivity {
     @OnClick(R2.id.openCertainPage)
     void openCertainPage() {
         ZDRouter.navigation(pageUrlEdit.getText().toString());
+        debugInfoSP.edit().putString("pageUrl", pageUrlEdit.getText().toString()).apply();
     }
 
     private Realm realm;
@@ -92,7 +93,5 @@ public class DebugViewActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         realm.close();
-
-        debugInfoSP.edit().putString("pageUrl", pageUrlEdit.getText().toString()).apply();
     }
 }

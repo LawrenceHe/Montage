@@ -2,31 +2,31 @@ package com.zhaodongdb.wireless.login;
 
 public class LoginRegisterRespData {
 
-    private String accessToken;
-    private String refreshToken;
-    private String userId;
+    private String verifyUserId;
+    private String userName;
+    private Boolean hasSetGesture;
 
-    public String getAccessToken() {
-        return accessToken;
+    public String getVerifyUserId() {
+        return verifyUserId;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setVerifyUserId(String verifyUserId) {
+        this.verifyUserId = verifyUserId;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getUserId() {
-        return userId;
+    public Boolean getHasSetGesture() {
+        return hasSetGesture;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setHasSetGesture(Boolean hasSetGesture) {
+        this.hasSetGesture = hasSetGesture;
     }
 }

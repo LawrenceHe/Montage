@@ -158,10 +158,12 @@ public class LoginRegisterActivity extends BaseActivity {
                                 Result<LoginRegisterRespData> result = HttpRequestHelper.parseHttpResponse(resp, LoginRegisterRespData.class);
                                 if (result.isSuccess()) {
                                     Toast.makeText(LoginRegisterActivity.this, "登录/注册成功！", Toast.LENGTH_SHORT).show();
-                                    UserInfo.getInstance().setUserId(result.getData().getUserId());
-                                    UserInfo.getInstance().setAccessToken(result.getData().getAccessToken());
-                                    UserInfo.getInstance().setRefreshToken(result.getData().getRefreshToken());
-                                    ZDRouter.navigation("/app/patternlocker/setting");
+                                    //UserInfo.getInstance().clearUserId();
+                                    if (result.getData().getHasSetGesture()) {
+                                        ZDRouter.navigation("/app/patternlocker/checking");
+                                    } else {
+                                        ZDRouter.navigation(String.format("/app/patternlocker/setting?verifyUserId=%s", result.getData().getVerifyUserId()));
+                                    }
                                 } else {
                                     Toast.makeText(LoginRegisterActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                 }

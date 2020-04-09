@@ -24,6 +24,11 @@ public class UserInfo {
         getUserInfoSP().edit().putString("userId", userId).apply();
     }
 
+    public void clearUserId() {
+        this.userId = "";
+        getUserInfoSP().edit().putString("userId", "").apply();
+    }
+
     public String getUserName() {
         if (userName == null) {
             userName = getUserInfoSP().getString("userName", "");
