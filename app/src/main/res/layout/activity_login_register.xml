@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    app:alignItems="center"
+    app:flexDirection="column">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <ImageView
-        android:layout_marginTop="50dp"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
         android:src="@drawable/common_icon_person" />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -27,34 +27,34 @@
 
         <EditText
             android:id="@+id/mobile"
-            android:inputType="phone|number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:hint="手机号码"
+            android:inputType="phone|number"
             android:text=""
             android:textColor="@color/textPrimary"
             android:textColorHint="@color/textHint"
             android:textSize="15dp" />
-    </RelativeLayout>
+    </FrameLayout>
 
-    <RelativeLayout
+    <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp"
+        app:alignItems="center"
+        app:flexDirection="row">
 
         <EditText
             android:id="@+id/messageToken"
-            android:inputType="number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:layout_toLeftOf="@+id/sendMessageToken"
             android:gravity="center_vertical"
             android:hint="短信验证码"
+            android:inputType="number"
             android:text=""
             android:textColor="@color/textPrimary"
             android:textColorHint="@color/textHint"
@@ -62,17 +62,18 @@
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
             android:id="@+id/sendMessageToken"
-            android:layout_width="150dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
             android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="发送短信验证码"
             app:qmui_isRadiusAdjustBounds="true" />
 
-    </RelativeLayout>
+    </com.google.android.flexbox.FlexboxLayout>
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/loginOrRegister"
@@ -91,4 +92,4 @@
         app:qmui_isRadiusAdjustBounds="true" />
 
 
-</LinearLayout>
+</com.google.android.flexbox.FlexboxLayout>
