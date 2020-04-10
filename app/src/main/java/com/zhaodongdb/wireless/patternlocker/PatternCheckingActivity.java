@@ -84,14 +84,18 @@ public class PatternCheckingActivity extends BaseActivity {
             @Override
             public void onComplete(@NotNull PatternLockerView view, @NotNull List<Integer> hitIndexList) {
                 boolean isError = !isPatternOk(hitIndexList);
-                view.updateStatus(isError);
-                patternIndicatorView.updateState(hitIndexList, isError);
-                updateMsg();
+                if (isError) {
+                    view.updateStatus(isError);
+                    patternIndicatorView.updateState(hitIndexList, isError);
+                    updateMsg();
+                } else {
+                    finishIfNeeded(view, hitIndexList);
+                }
             }
 
             @Override
             public void onClear(@NotNull PatternLockerView view) {
-                finishIfNeeded();
+
             }
         });
 
@@ -115,43 +119,45 @@ public class PatternCheckingActivity extends BaseActivity {
         this.textMsg.setTextColor(color);
     }
 
-    private void finishIfNeeded() {
-        if (this.patternHelper.isFinish()) {
-            Map<String, String> body = new HashMap<>();
-            body.put("gesture", this.patternHelper.getGesture());
-            body.put("verifyUserId", verifyUserId);
-            ZDHttpClient.getInstance().asyncPost(
-                    RequestUrlsEnum.LOGIN_BY_GESTURE.getEnvUrl(),
-                    HttpRequestHelper.buildJsonRequest(body),
-                    new ZDHttpCallback() {
+    private void finishIfNeeded(final PatternLockerView view, final List<Integer> hitIndexList) {
+        Map<String, String> body = new HashMap<>();
+        body.put("gesture", this.patternHelper.getGesture());
+        body.put("verifyUserId", verifyUserId);
+        ZDHttpClient.getInstance().asyncPost(
+                RequestUrlsEnum.LOGIN_BY_GESTURE.getEnvUrl(),
+                HttpRequestHelper.buildJsonRequest(body),
+                new ZDHttpCallback() {
 
-                        @Override
-                        public void onFailure(ZDHttpFailure failure) {
-                            Log.d(TAG, "check user gesture failure");
-                        }
+                    @Override
+                    public void onFailure(ZDHttpFailure failure) {
+                        Log.d(TAG, "check user gesture failure");
+                    }
 
-                        @Override
-                        public void onResponse(final ZDHttpResponse response) throws IOException {
-                            ThreadUtils.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    String resp = response.getResponseString();
-                                    Result<PatternRespData> result = HttpRequestHelper.parseHttpResponse(resp, PatternRespData.class);
-                                    if (result.isSuccess()) {
-                                        Toast.makeText(PatternCheckingActivity.this, "验证手势密码成功！", Toast.LENGTH_SHORT).show();
-                                        UserInfo.getInstance().setUserName(result.getData().getUserName());
-                                        UserInfo.getInstance().setUserId(result.getData().getUserId());
-                                        UserInfo.getInstance().setAccessToken(result.getData().getAccessToken());
-                                        UserInfo.getInstance().setRefreshToken(result.getData().getRefreshToken());
-                                        PatternCheckingActivity.this.finish();
-                                    } else {
-                                        Toast.makeText(PatternCheckingActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
-                                    }
+                    @Override
+                    public void onResponse(final ZDHttpResponse response) throws IOException {
+                        ThreadUtils.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String resp = response.getResponseString();
+                                Result<PatternRespData> result = HttpRequestHelper.parseHttpResponse(resp, PatternRespData.class);
+                                boolean isOk = result.isSuccess();
+                                patternHelper.validateForChecking(isOk);
+                                view.updateStatus(!isOk);
+                                patternIndicatorView.updateState(hitIndexList, !isOk);
+                                updateMsg();
+                                if (result.isSuccess()) {
+                                    Toast.makeText(PatternCheckingActivity.this, "验证手势密码成功！", Toast.LENGTH_SHORT).show();
+                                    UserInfo.getInstance().setUserName(result.getData().getUserName());
+                                    UserInfo.getInstance().setUserId(result.getData().getUserId());
+                                    UserInfo.getInstance().setAccessToken(result.getData().getAccessToken());
+                                    UserInfo.getInstance().setRefreshToken(result.getData().getRefreshToken());
+                                    PatternCheckingActivity.this.finish();
+                                } else {
+                                    Toast.makeText(PatternCheckingActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                        }
-                    });
-
-        }
+                            }
+                        });
+                    }
+                });
     }
 }

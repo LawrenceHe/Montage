@@ -59,20 +59,20 @@ public class PatternHelper {
         }
     }
 
+    // 此方法只校验用户连接的点是否满足最少点数
+    // 校验分为两步，本地校验只校验是否满足最少点数，服务端校验看是否正确
     public void validateForChecking(List<Integer> hitIndexList) {
         this.isOk = false;
 
         if ((hitIndexList == null) || (hitIndexList.size() < MAX_SIZE)) {
             this.times++;
             this.isFinish = this.times >= MAX_SIZE;
-            this.message = getPwdErrorMsg();
+            this.message = getSizeErrorMsg();
             return;
         }
 
-        this.storagePwd = convert2String(hitIndexList);
-        this.message = getCheckingSuccessMsg();
         this.isOk = true;
-        this.isFinish = true;
+        this.storagePwd = convert2String(hitIndexList);
 
 // 手势密码不再进行本地校验
 //        this.storagePwd = getFromStorage();
@@ -85,6 +85,18 @@ public class PatternHelper {
 //            this.isFinish = this.times >= MAX_SIZE;
 //            this.message = getPwdErrorMsg();
 //        }
+    }
+
+    public void validateForChecking(Boolean isOk) {
+        this.isOk = isOk;
+        if (isOk) {
+            this.message = getCheckingSuccessMsg();
+            this.isFinish = true;
+        } else {
+            this.times++;
+            this.isFinish = this.times >= MAX_SIZE;
+            this.message = getPwdErrorMsg();
+        }
     }
 
     public String getMessage() {

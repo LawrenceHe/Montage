@@ -53,7 +53,7 @@ public class ZhaodongDBApplication extends BaseApplication implements ReactAppli
         super.onCreate();
 
         // 设置环境
-        AppConfig.setEnv(AppConfig.EnvType.DEV);
+//        AppConfig.setEnv(AppConfig.EnvType.DEV);
 
         // 初始化JRPush
         PushManager.push = new IJRPush() {
