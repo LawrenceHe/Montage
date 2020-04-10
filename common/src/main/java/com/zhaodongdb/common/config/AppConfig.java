@@ -6,8 +6,13 @@ public class AppConfig {
         DEV, SIT, UAT, PRD
     }
 
+    private static EnvType envType = EnvType.PRD;
+
+    public static void setEnv(AppConfig.EnvType type) {
+        envType = type;
+    }
+
     public static AppConfig.EnvType getEnv() {
-        EnvType envType = EnvType.PRD;
         return envType;
     }
 }

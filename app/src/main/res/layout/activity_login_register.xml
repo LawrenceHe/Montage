@@ -36,7 +36,9 @@
             android:text=""
             android:textColor="@color/textPrimary"
             android:textColorHint="@color/textHint"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:theme="@style/CommonEditText" />
+
     </FrameLayout>
 
     <com.google.android.flexbox.FlexboxLayout
@@ -58,7 +60,8 @@
             android:text=""
             android:textColor="@color/textPrimary"
             android:textColorHint="@color/textHint"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:theme="@style/CommonEditText" />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
             android:id="@+id/sendMessageToken"
@@ -90,6 +93,5 @@
         android:text="登录/注册"
         android:textSize="25dp"
         app:qmui_isRadiusAdjustBounds="true" />
-
 
 </com.google.android.flexbox.FlexboxLayout>

@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.zhaodongdb.common.component.BaseActivity;
+
 import com.zhaodongdb.common.network.HttpRequestHelper;
 import com.zhaodongdb.common.network.RequestUrlsEnum;
 import com.zhaodongdb.common.network.Result;
@@ -18,15 +18,16 @@ import com.zhaodongdb.common.network.ZDHttpCallback;
 import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpFailure;
 import com.zhaodongdb.common.network.ZDHttpResponse;
+import com.zhaodongdb.common.user.UserInfo;
+import com.zhaodongdb.common.utils.ThreadUtils;
+import com.zhaodongdb.wireless.R;
+import com.zhaodongdb.common.component.BaseActivity;
 import com.zhaodongdb.common.patternlocker.DefaultLockerNormalCellView;
 import com.zhaodongdb.common.patternlocker.DefaultStyleDecorator;
 import com.zhaodongdb.common.patternlocker.OnPatternChangeListener;
 import com.zhaodongdb.common.patternlocker.PatternIndicatorView;
 import com.zhaodongdb.common.patternlocker.PatternLockerView;
 import com.zhaodongdb.common.patternlocker.RippleLockerHitCellView;
-import com.zhaodongdb.common.user.UserInfo;
-import com.zhaodongdb.common.utils.ThreadUtils;
-import com.zhaodongdb.wireless.R;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -38,8 +39,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-@Route(path = "/app/patternlocker/setting")
-public class PatternSettingActivity extends BaseActivity {
+@Route(path = "/app/patternlocker/checking")
+public class PatternCheckingActivity extends BaseActivity {
 
     static final String TAG = PatternSettingActivity.class.getSimpleName();
 
@@ -60,16 +61,16 @@ public class PatternSettingActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_whole_pattern_setting);
+        setContentView(R.layout.activity_whole_pattern_checking);
         ButterKnife.bind(this);
 
-        DefaultStyleDecorator decorator = ((DefaultLockerNormalCellView)patternLockerView.getNormalCellView()).getStyleDecorator();
+        DefaultStyleDecorator decorator = ((DefaultLockerNormalCellView) this.patternLockerView.getNormalCellView()).getStyleDecorator();
 
-        patternLockerView.setHitCellView(new RippleLockerHitCellView()
+        this.patternLockerView.setHitCellView(new RippleLockerHitCellView()
                 .setHitColor(decorator.getHitColor())
                 .setErrorColor(decorator.getErrorColor()));
 
-        patternLockerView.setOnPatternChangedListener(new OnPatternChangeListener() {
+        this.patternLockerView.setOnPatternChangedListener(new OnPatternChangeListener() {
             @Override
             public void onStart(@NotNull PatternLockerView view) {
 
@@ -82,11 +83,10 @@ public class PatternSettingActivity extends BaseActivity {
 
             @Override
             public void onComplete(@NotNull PatternLockerView view, @NotNull List<Integer> hitIndexList) {
-                boolean isOk = isPatternOk(hitIndexList);
-                view.updateStatus(!isOk);
-                patternIndicatorView.updateState(hitIndexList, !isOk);
+                boolean isError = !isPatternOk(hitIndexList);
+                view.updateStatus(isError);
+                patternIndicatorView.updateState(hitIndexList, isError);
                 updateMsg();
-                patternLockerView.clearHitState();
             }
 
             @Override
@@ -95,12 +95,12 @@ public class PatternSettingActivity extends BaseActivity {
             }
         });
 
-        this.textMsg.setText("设置解锁图案");
+        this.textMsg.setText("输入解锁图案");
         this.patternHelper = new PatternHelper();
     }
 
     private boolean isPatternOk(List<Integer> hitIndexList) {
-        this.patternHelper.validateForSetting(hitIndexList);
+        this.patternHelper.validateForChecking(hitIndexList);
         return this.patternHelper.isOk();
     }
 
@@ -116,18 +116,18 @@ public class PatternSettingActivity extends BaseActivity {
     }
 
     private void finishIfNeeded() {
-        if (this.patternHelper.isFinish()){
+        if (this.patternHelper.isFinish()) {
             Map<String, String> body = new HashMap<>();
             body.put("gesture", this.patternHelper.getGesture());
             body.put("verifyUserId", verifyUserId);
             ZDHttpClient.getInstance().asyncPost(
-                    RequestUrlsEnum.SET_GESTURE.getEnvUrl(),
+                    RequestUrlsEnum.LOGIN_BY_GESTURE.getEnvUrl(),
                     HttpRequestHelper.buildJsonRequest(body),
                     new ZDHttpCallback() {
 
                         @Override
                         public void onFailure(ZDHttpFailure failure) {
-                            Log.d(TAG, "set user gesture failure");
+                            Log.d(TAG, "check user gesture failure");
                         }
 
                         @Override
@@ -138,19 +138,20 @@ public class PatternSettingActivity extends BaseActivity {
                                     String resp = response.getResponseString();
                                     Result<PatternRespData> result = HttpRequestHelper.parseHttpResponse(resp, PatternRespData.class);
                                     if (result.isSuccess()) {
-                                        Toast.makeText(PatternSettingActivity.this, "设置手势密码成功！", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PatternCheckingActivity.this, "验证手势密码成功！", Toast.LENGTH_SHORT).show();
                                         UserInfo.getInstance().setUserName(result.getData().getUserName());
                                         UserInfo.getInstance().setUserId(result.getData().getUserId());
                                         UserInfo.getInstance().setAccessToken(result.getData().getAccessToken());
                                         UserInfo.getInstance().setRefreshToken(result.getData().getRefreshToken());
-                                        PatternSettingActivity.this.finish();
+                                        PatternCheckingActivity.this.finish();
                                     } else {
-                                        Toast.makeText(PatternSettingActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PatternCheckingActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                         }
                     });
+
         }
     }
 }

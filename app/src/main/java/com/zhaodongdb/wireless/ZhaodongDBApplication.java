@@ -11,6 +11,7 @@ import com.facebook.soloader.SoLoader;
 import com.jd.jrapp.push.IJRPush;
 import com.jd.jrapp.push.PushManager;
 import com.zhaodongdb.common.component.BaseApplication;
+import com.zhaodongdb.common.config.AppConfig;
 import com.zhaodongdb.common.utils.DeviceUtil;
 
 import java.lang.reflect.InvocationTargetException;
@@ -50,6 +51,9 @@ public class ZhaodongDBApplication extends BaseApplication implements ReactAppli
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // 设置环境
+        AppConfig.setEnv(AppConfig.EnvType.DEV);
 
         // 初始化JRPush
         PushManager.push = new IJRPush() {

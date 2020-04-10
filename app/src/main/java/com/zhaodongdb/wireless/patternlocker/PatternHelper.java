@@ -1,4 +1,4 @@
-package com.zhaodongdb.common.patternlocker;
+package com.zhaodongdb.wireless.patternlocker;
 
 import android.text.TextUtils;
 
@@ -14,7 +14,7 @@ import java.util.List;
 public class PatternHelper {
     public static final int MAX_SIZE = 4;
     public static final int MAX_TIMES = 5;
-    private static final String GESTURE_PWD_KEY = "gesture_pwd_key";
+    //private static final String GESTURE_PWD_KEY = "gesture_pwd_key";
 
     private String message;
     private String storagePwd;
@@ -22,6 +22,10 @@ public class PatternHelper {
     private int times;
     private boolean isFinish;
     private boolean isOk;
+
+    public String getGesture() {
+        return storagePwd;
+    }
 
     public void validateForSetting(List<Integer> hitIndexList) {
         this.isFinish = false;
@@ -44,7 +48,9 @@ public class PatternHelper {
         //2. draw second times
         if (this.tmpPwd.equals(convert2String(hitIndexList))) {
             this.message = getSettingSuccessMsg();
-            saveToStorage(this.tmpPwd);
+            // 手势密码不再存储至本地
+            // saveToStorage(this.tmpPwd);
+            this.storagePwd = this.tmpPwd;
             this.isOk = true;
             this.isFinish = true;
         } else {
@@ -63,16 +69,22 @@ public class PatternHelper {
             return;
         }
 
-        this.storagePwd = getFromStorage();
-        if (!TextUtils.isEmpty(this.storagePwd) && this.storagePwd.equals(convert2String(hitIndexList))) {
-            this.message = getCheckingSuccessMsg();
-            this.isOk = true;
-            this.isFinish = true;
-        } else {
-            this.times++;
-            this.isFinish = this.times >= MAX_SIZE;
-            this.message = getPwdErrorMsg();
-        }
+        this.storagePwd = convert2String(hitIndexList);
+        this.message = getCheckingSuccessMsg();
+        this.isOk = true;
+        this.isFinish = true;
+
+// 手势密码不再进行本地校验
+//        this.storagePwd = getFromStorage();
+//        if (!TextUtils.isEmpty(this.storagePwd) && this.storagePwd.equals(convert2String(hitIndexList))) {
+//            this.message = getCheckingSuccessMsg();
+//            this.isOk = true;
+//            this.isFinish = true;
+//        } else {
+//            this.times++;
+//            this.isFinish = this.times >= MAX_SIZE;
+//            this.message = getPwdErrorMsg();
+//        }
     }
 
     public String getMessage() {
@@ -115,15 +127,16 @@ public class PatternHelper {
         return hitIndexList.toString();
     }
 
-    private void saveToStorage(String gesturePwd) {
-        final String encryptPwd = SecurityUtil.encrypt(gesturePwd);
-        SharedPreferencesUtil.getInstance().saveString(GESTURE_PWD_KEY, encryptPwd);
-    }
-
-    private String getFromStorage() {
-        final String result = SharedPreferencesUtil.getInstance().getString(GESTURE_PWD_KEY);
-        return SecurityUtil.decrypt(result);
-    }
+    // 手势密码不再存储至本地，而是存储在服务端
+//    private void saveToStorage(String gesturePwd) {
+//        final String encryptPwd = SecurityUtil.encrypt(gesturePwd);
+//        SharedPreferencesUtil.getInstance().saveString(GESTURE_PWD_KEY, encryptPwd);
+//    }
+//
+//    private String getFromStorage() {
+//        final String result = SharedPreferencesUtil.getInstance().getString(GESTURE_PWD_KEY);
+//        return SecurityUtil.decrypt(result);
+//    }
 
     private int getRemainTimes() {
         return (times < 5) ? (MAX_TIMES - times) : 0;

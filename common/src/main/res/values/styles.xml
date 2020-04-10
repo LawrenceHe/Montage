@@ -34,4 +34,9 @@
         <item name="android:textColor">#ffffff</item>
         <item name="android:background">#33000000</item>
     </style>
+
+    <style name="CommonEditText">
+        <item name="colorControlNormal">@color/item_border_color</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+    </style>
 </resources>

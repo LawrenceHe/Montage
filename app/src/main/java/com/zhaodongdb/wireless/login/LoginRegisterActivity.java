@@ -48,7 +48,7 @@ public class LoginRegisterActivity extends BaseActivity {
     @BindView(R.id.messageToken) EditText messageTokenEdit;
     @BindView(R.id.sendMessageToken) QMUIRoundButton sendMessageTokenButton;
 
-    private final int COUNT_DOWN = 60;
+    private final int COUNT_DOWN = 6;
     private int count = COUNT_DOWN;
     private SafeHandler handler = new SafeHandler(this);
     private Timer timer = null;
@@ -64,7 +64,7 @@ public class LoginRegisterActivity extends BaseActivity {
             sendMessageTokenButton.setEnabled(false);
             sendMessageTokenButton.setText(String.format(Locale.getDefault(), "(%02d) 短信验证码", count));
 
-            if (count == 0) {
+            if (count <= 0) {
                 sendMessageTokenButton.setEnabled(true);
                 sendMessageTokenButton.setText("发送短信验证码");
                 timer.cancel();
@@ -160,7 +160,7 @@ public class LoginRegisterActivity extends BaseActivity {
                                     Toast.makeText(LoginRegisterActivity.this, "登录/注册成功！", Toast.LENGTH_SHORT).show();
                                     //UserInfo.getInstance().clearUserId();
                                     if (result.getData().getHasSetGesture()) {
-                                        ZDRouter.navigation("/app/patternlocker/checking");
+                                        ZDRouter.navigation(String.format("/app/patternlocker/checking?verifyUserId=%s", result.getData().getVerifyUserId()));
                                     } else {
                                         ZDRouter.navigation(String.format("/app/patternlocker/setting?verifyUserId=%s", result.getData().getVerifyUserId()));
                                     }

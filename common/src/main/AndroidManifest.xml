@@ -24,8 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".debug.DebugViewActivity" />
-        <activity android:name=".patternlocker.PatternSettingActivity" />
-        <activity android:name=".patternlocker.PatternCheckingActivity" />
         <activity android:name=".jssdk.WebViewActivity" />
 
     </application>
