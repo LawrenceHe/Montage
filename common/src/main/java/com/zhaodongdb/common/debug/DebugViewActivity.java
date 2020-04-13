@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.zhaodongdb.common.R2;
 import com.zhaodongdb.common.component.BaseActivity;
+import com.zhaodongdb.common.config.AppConfig;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.user.User;
 import com.zhaodongdb.common.utils.FoundationContextHolder;
@@ -27,7 +31,8 @@ public class DebugViewActivity extends BaseActivity {
 
     final static String TAG = DebugViewActivity.class.getSimpleName();
 
-    SharedPreferences debugInfoSP = FoundationContextHolder.getContext().getSharedPreferences("DebugInfo", Context.MODE_PRIVATE);
+    private SharedPreferences debugInfoSP = FoundationContextHolder.getContext().getSharedPreferences("DebugInfo", Context.MODE_PRIVATE);
+    private Realm realm;
 
     @BindView(R2.id.topbar)
     QMUITopBarLayout topBar;
@@ -68,7 +73,16 @@ public class DebugViewActivity extends BaseActivity {
         debugInfoSP.edit().putString("pageUrl", pageUrlEdit.getText().toString()).apply();
     }
 
-    private Realm realm;
+    @BindView(R2.id.radioEnvGroup)
+    RadioGroup radioEnvGroup;
+    @BindView(R2.id.radioEnvDev)
+    RadioButton radioEnvDev;
+    @BindView(R2.id.radioEnvSit)
+    RadioButton radioEnvSit;
+    @BindView(R2.id.radioEnvUat)
+    RadioButton radioEnvUat;
+    @BindView(R2.id.radioEnvPrd)
+    RadioButton radioEnvPrd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +101,36 @@ public class DebugViewActivity extends BaseActivity {
 
         String pageUrl = debugInfoSP.getString("pageUrl", "");
         pageUrlEdit.setText(pageUrl);
+
+        switch(AppConfig.getEnv()) {
+            case DEV:
+                radioEnvDev.setChecked(true);
+                break;
+            case SIT:
+                radioEnvSit.setChecked(true);
+                break;
+            case UAT:
+                radioEnvUat.setChecked(true);
+                break;
+            case PRD:
+                radioEnvPrd.setChecked(true);
+                break;
+        }
+
+        radioEnvGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.radioEnvDev) {
+                    AppConfig.setEnv(AppConfig.EnvType.DEV);
+                } else if (checkedId == R.id.radioEnvSit) {
+                    AppConfig.setEnv(AppConfig.EnvType.SIT);
+                } else if (checkedId == R.id.radioEnvUat) {
+                    AppConfig.setEnv(AppConfig.EnvType.UAT);
+                } else if (checkedId == R.id.radioEnvPrd) {
+                    AppConfig.setEnv(AppConfig.EnvType.PRD);
+                }
+            }
+        });
     }
 
     @Override

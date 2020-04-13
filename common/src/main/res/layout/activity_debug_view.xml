@@ -17,6 +17,50 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp"
+            android:text="开发环境选择："
+            android:textSize="18dp" />
+
+        <RadioGroup
+            android:id="@+id/radioEnvGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioEnvDev"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="dev" />
+
+            <RadioButton
+                android:id="@+id/radioEnvSit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="sit" />
+
+            <RadioButton
+                android:id="@+id/radioEnvUat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="uat" />
+
+            <RadioButton
+                android:id="@+id/radioEnvPrd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="prd" />
+        </RadioGroup>
+
         <Button
             android:id="@+id/testRealmDatabase"
             android:layout_width="wrap_content"
