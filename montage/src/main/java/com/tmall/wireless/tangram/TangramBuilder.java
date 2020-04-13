@@ -246,8 +246,9 @@ public class TangramBuilder {
 
     public static final String TYPE_CONTAINER_FLOAT = "container-float";
 
+    // TODO: 为了兼容iOS的临时调整卡片名字，后面要恢复原状
     public static final String TYPE_CONTAINER_BANNER = "container-banner";
-//    public static final String TYPE_CONTAINER_SCROLL = "page-container";
+    // public static final String TYPE_CONTAINER_SCROLL = "page-container";
 
     public static final String TYPE_CONTAINER_SCROLL = "container-scroll";
 

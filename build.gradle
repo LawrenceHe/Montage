@@ -20,7 +20,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.jakewharton:butterknife-gradle-plugin:$butterknife_version"
         classpath "io.realm:realm-gradle-plugin:6.0.1"
-        classpath files('libs/agcp-1.0.0.300.jar')
+//        classpath files('libs/agcp-1.0.0.300.jar')
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
