@@ -140,15 +140,24 @@ public class VirtualText extends TextBase {
                 left = (mMeasuredWidth - mContentRect.width()) / 2;
             }
 
+            // TODO:由于ios不支持v_center，因此把安卓的VText控件在垂直方向的对齐是改为默认v_center
             int top;
             if (0 != (mGravity & ViewBaseCommon.BOTTOM)) {
                 top = mMeasuredHeight - mPaddingBottom;
-            } else if (0 != (mGravity & ViewBaseCommon.V_CENTER)) {
+            } else if (0 != (mGravity & ViewBaseCommon.TOP)) {
+                top = mContentRect.height() + mPaddingTop;
+            } else { // default : V_CENTER
                 Paint.FontMetricsInt fontMetrics = mPaint.getFontMetricsInt();
                 top = (mMeasuredHeight - fontMetrics.bottom - fontMetrics.top) / 2 + mDescent;
-            } else {
-                top = mContentRect.height() + mPaddingTop;
             }
+//            if (0 != (mGravity & ViewBaseCommon.BOTTOM)) {
+//                top = mMeasuredHeight - mPaddingBottom;
+//            } else if (0 != (mGravity & ViewBaseCommon.V_CENTER)) {
+//                Paint.FontMetricsInt fontMetrics = mPaint.getFontMetricsInt();
+//                top = (mMeasuredHeight - fontMetrics.bottom - fontMetrics.top) / 2 + mDescent;
+//            } else {
+//                top = mContentRect.height() + mPaddingTop;
+//            }
 
             canvas.save();
             canvas.clipRect(0, 0, mMeasuredWidth, mMeasuredHeight);
