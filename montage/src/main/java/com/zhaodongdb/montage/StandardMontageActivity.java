@@ -49,7 +49,7 @@ import java.util.Map;
 @Route(path = "/montage/standard")
 public class StandardMontageActivity extends AppCompatActivity {
 
-    final String TAG = StandardMontageActivity.class.getSimpleName();
+    static final String TAG = StandardMontageActivity.class.getSimpleName();
 
     @Autowired
     String pageName;
@@ -182,7 +182,7 @@ public class StandardMontageActivity extends AppCompatActivity {
         try {
             engine.setData(new JSONArray(data.getData()));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "engine data error" + e.getMessage());
         }
     }
 

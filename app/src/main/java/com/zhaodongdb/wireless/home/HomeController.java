@@ -189,7 +189,7 @@ public abstract class HomeController extends QMUIWindowInsetLayout {
                                     JSONArray array = new JSONArray(data.getJSONArray("cards").toString());
                                     engine.setData(array);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    Log.e(TAG, "engine data error" + e.getMessage());
                                 }
                             }
                         });

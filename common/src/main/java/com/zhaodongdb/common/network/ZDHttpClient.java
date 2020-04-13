@@ -2,6 +2,7 @@ package com.zhaodongdb.common.network;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.zhaodongdb.common.utils.ThreadUtils;
 
@@ -22,6 +23,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ZDHttpClient {
+
+    static final String TAG = ZDHttpClient.class.getSimpleName();
 
     public static final int kMinTimeout = 5 * 1000;
     public static final int kMaxTimeout = 120 * 1000;
@@ -242,6 +245,7 @@ public class ZDHttpClient {
 
             @Override
             public void onFailure(final Call call, final IOException e) {
+                Log.i(TAG, "http request on failure." + call.request().toString());
                 if (call.isCanceled()) {
                     return;
                 }
@@ -270,6 +274,7 @@ public class ZDHttpClient {
 
             @Override
             public void onResponse(final Call call, final Response response) throws IOException {
+                Log.i(TAG, "http request on response." + call.request().toString());
                 if (call.isCanceled()) {
                     return;
                 }

@@ -120,8 +120,10 @@ public class LoginRegisterActivity extends BaseActivity {
                                 String resp = response.getResponseString();
                                 Result<MessageTokenRespData> result = HttpRequestHelper.parseHttpResponse(resp, MessageTokenRespData.class);
                                 if (result.isSuccess()) {
-                                    Toast.makeText(LoginRegisterActivity.this, "短信验证码发送成功！", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginRegisterActivity.this, "短信验证码发送成功", Toast.LENGTH_SHORT).show();
                                     messageTokenEdit.setText(result.getData().getMessageToken());
+                                } else {
+                                    Toast.makeText(LoginRegisterActivity.this, "短信验证码发送失败", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

@@ -1,5 +1,6 @@
 package com.zhaodongdb.common.network;
 
+import android.util.Log;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -27,13 +28,12 @@ public class ZDHttpResponse {
 
     public String getResponseString(){
         try {
-            if(getResponse()!=null)
-                return getResponse().body().string();
-            else
-                return null;
-        }catch (Exception ex){
-
+            String body = getResponse().body().string();
+            Log.i(ZDHttpClient.TAG, "http request response body:" + body);
+            return body;
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        return null;
+        return "";
     }
 }

@@ -44,20 +44,25 @@ public class HttpRequestHelper {
     }
 
     public static <T> Result<T> parseHttpResponse(String resp, Class<T> clazz) {
-        JSONObject respJsonObj = (JSONObject)JSON.parse(resp);
-        String code = respJsonObj.getString("respCode");
-        String msg = respJsonObj.getString("respMsg");
-        Result<T> result = new Result<>();
-        result.setCode(code);
-        result.setMsg(msg);
-        JSONObject dataJsonObj = respJsonObj.getJSONObject("data");
-        if (dataJsonObj == null) {
-            result.setData(null);
-            return result;
-        } else {
-            T data = dataJsonObj.toJavaObject(clazz);
-            result.setData(data);
-            return result;
+        try {
+            JSONObject respJsonObj = (JSONObject)JSON.parse(resp);
+            String code = respJsonObj.getString("respCode");
+            String msg = respJsonObj.getString("respMsg");
+            Result<T> result = new Result<>();
+            result.setCode(code);
+            result.setMsg(msg);
+            JSONObject dataJsonObj = respJsonObj.getJSONObject("data");
+            if (dataJsonObj == null) {
+                result.setData(null);
+                return result;
+            } else {
+                T data = dataJsonObj.toJavaObject(clazz);
+                result.setData(data);
+                return result;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result<>();
         }
     }
 }
