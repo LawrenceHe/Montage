@@ -29,9 +29,9 @@ public class ZDHttpResponse {
     public String getResponseString(){
         try {
             String body = getResponse().body().string();
-            Log.i(ZDHttpClient.TAG, "http request response body:" + body);
+//            Log.i(ZDHttpClient.TAG, "http request response body:" + body);
             return body;
-        }catch (Exception e){
+        } catch (Exception e){
             e.printStackTrace();
         }
         return "";

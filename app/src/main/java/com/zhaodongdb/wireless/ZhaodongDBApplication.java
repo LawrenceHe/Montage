@@ -64,7 +64,7 @@ public class ZhaodongDBApplication extends BaseApplication implements ReactAppli
 
             @Override
             public String BASE_COMMON_SURL() {
-                return null;
+                return "http://push-zdtdt.jdfcloud.com/api";
             }
 
             @Override
@@ -84,12 +84,12 @@ public class ZhaodongDBApplication extends BaseApplication implements ReactAppli
 
             @Override
             public String appId() {
-                return null;
+                return "jdjr";
             }
 
             @Override
             public String appSecret() {
-                return null;
+                return "zhaodongdb";
             }
 
             @Override
@@ -102,7 +102,7 @@ public class ZhaodongDBApplication extends BaseApplication implements ReactAppli
                 return "unknown";
             }
         };
-        PushManager.getInstance().setType(1);
+        PushManager.getInstance().setType(2);
         PushManager.getInstance().initAndGetToken("", "");
 
         SoLoader.init(this, /* native exopackage */ false);
