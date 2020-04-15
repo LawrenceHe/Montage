@@ -38,7 +38,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-@Route(path = "/app/patternlocker/setting")
+@Route(path = "/base/patternlocker/setting")
 public class PatternSettingActivity extends BaseActivity {
 
     static final String TAG = PatternSettingActivity.class.getSimpleName();
