@@ -136,7 +136,11 @@ public class PatternHelper {
     }
 
     private String convert2String(List<Integer> hitIndexList) {
-        return hitIndexList.toString();
+        StringBuilder sb = new StringBuilder();
+        for (Integer i : hitIndexList) {
+            sb.append(i);
+        }
+        return sb.toString();
     }
 
     // 手势密码不再存储至本地，而是存储在服务端
