@@ -3,11 +3,7 @@ package com.zhaodongdb.wireless.home;
 import android.content.Context;
 
 import com.tmall.wireless.tangram.TangramEngine;
-
-/**
- * @author cginechen
- * @date 2016-10-20
- */
+import com.zhaodongdb.wireless.R;
 
 public class MainHomeController extends HomeController {
 
@@ -17,7 +13,7 @@ public class MainHomeController extends HomeController {
 
     @Override
     protected String getTitle() {
-        return "Components";
+        return getResources().getString(R.string.tab_home);
     }
 
 //    @Override

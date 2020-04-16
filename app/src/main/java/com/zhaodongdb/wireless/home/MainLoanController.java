@@ -3,11 +3,8 @@ package com.zhaodongdb.wireless.home;
 import android.content.Context;
 
 import com.tmall.wireless.tangram.TangramEngine;
+import com.zhaodongdb.wireless.R;
 
-/**
- * @author cginechen
- * @date 2016-10-20
- */
 
 public class MainLoanController extends HomeController {
 
@@ -17,7 +14,7 @@ public class MainLoanController extends HomeController {
 
     @Override
     protected String getTitle() {
-        return "Lab";
+        return getResources().getString(R.string.tab_loan);
     }
 
 //    @Override

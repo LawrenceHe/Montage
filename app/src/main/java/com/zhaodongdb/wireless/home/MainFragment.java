@@ -29,11 +29,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * @author cginechen
- * @date 2016-10-19
- */
-
 public class MainFragment extends BaseFragment {
     private final static String TAG = MainFragment.class.getSimpleName();
 

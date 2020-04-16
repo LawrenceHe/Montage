@@ -45,10 +45,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * @author cginechen
- * @date 2016-10-20
- */
 
 public abstract class HomeController extends QMUIWindowInsetLayout {
 

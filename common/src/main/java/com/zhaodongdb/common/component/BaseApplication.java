@@ -13,6 +13,7 @@ import com.zhaodongdb.common.utils.FoundationContextHolder;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+
 public class BaseApplication extends MultiDexApplication {
 
     private static BaseApplication instance;
@@ -25,6 +26,7 @@ public class BaseApplication extends MultiDexApplication {
         long startTime = System.currentTimeMillis();
 
         super.onCreate();
+        // 设置全局Context
         instance = this;
         FoundationContextHolder.setApplication(instance);
         FoundationContextHolder.setContext(instance);
