@@ -1,5 +1,6 @@
 package com.zhaodongdb.wireless.patternlocker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.zhaodongdb.common.network.ZDHttpClient;
 import com.zhaodongdb.common.network.ZDHttpFailure;
 import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.user.UserInfo;
+import com.zhaodongdb.common.utils.BroadcastConstants;
 import com.zhaodongdb.common.utils.ThreadUtils;
 import com.zhaodongdb.wireless.R;
 import com.zhaodongdb.common.component.BaseActivity;
@@ -151,6 +153,10 @@ public class PatternCheckingActivity extends BaseActivity {
                                     UserInfo.getInstance().setUserId(result.getData().getUserId());
                                     UserInfo.getInstance().setAccessToken(result.getData().getAccessToken());
                                     UserInfo.getInstance().setRefreshToken(result.getData().getRefreshToken());
+
+                                    sendBroadcast(new Intent(BroadcastConstants.ZD_LOGIN_SUCCESS));
+                                    sendBroadcast(new Intent(BroadcastConstants.ZD_GESTURE_PWD_CHECK_SUCCESS));
+
                                     PatternCheckingActivity.this.finish();
                                 } else {
                                     Toast.makeText(PatternCheckingActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();

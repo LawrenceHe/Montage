@@ -1,6 +1,9 @@
 package com.zhaodongdb.wireless.home;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import com.tmall.wireless.tangram.TangramBuilder;
 import com.tmall.wireless.tangram.TangramEngine;
 import com.tmall.wireless.tangram.util.IInnerImageSetter;
+import com.zhaodongdb.common.utils.BroadcastConstants;
 import com.zhaodongdb.wireless.R;
 
 import java.util.HashMap;
@@ -79,18 +83,36 @@ public class MainFragment extends BaseFragment {
         }
     };
 
+    private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            for (Map.Entry<Pager, HomeController> entry : mPages.entrySet()) {
+                entry.getValue().initData();
+            }
+        }
+    };
+
     @Override
     protected View onCreateView() {
         FrameLayout layout = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
         ButterKnife.bind(this, layout);
         initTabs();
         initPagers();
+
+        if (getBaseFragmentActivity() != null) {
+            getBaseFragmentActivity().registerReceiver(loginReceiver, new IntentFilter(BroadcastConstants.ZD_LOGIN_SUCCESS));
+        }
+
         return layout;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        if (getBaseFragmentActivity() != null) {
+            getBaseFragmentActivity().unregisterReceiver(loginReceiver);
+        }
 
         for (Map.Entry<Pager, HomeController> entry : mPages.entrySet()) {
             TangramEngine engine = entry.getValue().getEngine();

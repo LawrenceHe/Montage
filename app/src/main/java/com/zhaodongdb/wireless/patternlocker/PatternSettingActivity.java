@@ -1,5 +1,6 @@
 package com.zhaodongdb.wireless.patternlocker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import com.zhaodongdb.common.patternlocker.PatternIndicatorView;
 import com.zhaodongdb.common.patternlocker.PatternLockerView;
 import com.zhaodongdb.common.patternlocker.RippleLockerHitCellView;
 import com.zhaodongdb.common.user.UserInfo;
+import com.zhaodongdb.common.utils.BroadcastConstants;
 import com.zhaodongdb.common.utils.ThreadUtils;
 import com.zhaodongdb.wireless.R;
 
@@ -143,6 +145,10 @@ public class PatternSettingActivity extends BaseActivity {
                                         UserInfo.getInstance().setUserId(result.getData().getUserId());
                                         UserInfo.getInstance().setAccessToken(result.getData().getAccessToken());
                                         UserInfo.getInstance().setRefreshToken(result.getData().getRefreshToken());
+
+                                        sendBroadcast(new Intent(BroadcastConstants.ZD_LOGIN_SUCCESS));
+                                        sendBroadcast(new Intent(BroadcastConstants.ZD_GESTURE_PWD_SET_SUCCESS));
+
                                         PatternSettingActivity.this.finish();
                                     } else {
                                         Toast.makeText(PatternSettingActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();

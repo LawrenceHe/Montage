@@ -1,5 +1,6 @@
 package com.zhaodongdb.wireless.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.zhaodongdb.common.network.ZDHttpFailure;
 import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.user.UserInfo;
+import com.zhaodongdb.common.utils.BroadcastConstants;
 import com.zhaodongdb.common.utils.SafeHandler;
 import com.zhaodongdb.common.utils.ThreadUtils;
 import com.zhaodongdb.wireless.R;
@@ -159,13 +161,15 @@ public class LoginRegisterActivity extends BaseActivity {
                                 String resp = response.getResponseString();
                                 Result<LoginRegisterRespData> result = HttpRequestHelper.parseHttpResponse(resp, LoginRegisterRespData.class);
                                 if (result.isSuccess()) {
-                                    Toast.makeText(LoginRegisterActivity.this, "登录/注册成功！", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginRegisterActivity.this, "短信验证码正确", Toast.LENGTH_SHORT).show();
                                     //UserInfo.getInstance().clearUserId();
                                     if (result.getData().getHasSetGesture()) {
-                                        ZDRouter.navigation(String.format("/app/patternlocker/checking?verifyUserId=%s", result.getData().getVerifyUserId()));
+                                        ZDRouter.navigation(String.format("/base/patternlocker/checking?verifyUserId=%s", result.getData().getVerifyUserId()));
                                     } else {
-                                        ZDRouter.navigation(String.format("/app/patternlocker/setting?verifyUserId=%s", result.getData().getVerifyUserId()));
+                                        ZDRouter.navigation(String.format("/base/patternlocker/setting?verifyUserId=%s", result.getData().getVerifyUserId()));
                                     }
+                                    sendBroadcast(new Intent(BroadcastConstants.ZD_TEXT_MSG_VERIFICATION_SUCCESS));
+                                    LoginRegisterActivity.this.finish();
                                 } else {
                                     Toast.makeText(LoginRegisterActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                 }
