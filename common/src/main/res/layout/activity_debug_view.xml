@@ -91,6 +91,13 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/testWeixinLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调起微信登录"
+            android:textSize="18dp" />
+
     </LinearLayout>
 
 </LinearLayout>

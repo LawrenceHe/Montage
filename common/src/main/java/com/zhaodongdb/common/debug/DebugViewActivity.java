@@ -5,13 +5,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zhaodongdb.common.R2;
 import com.zhaodongdb.common.component.BaseActivity;
 import com.zhaodongdb.common.config.AppConfig;
@@ -19,6 +21,7 @@ import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.user.User;
 import com.zhaodongdb.common.utils.FoundationContextHolder;
 import com.zhaodongdb.common.R;
+import com.zhaodongdb.common.utils.WXConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,11 +87,24 @@ public class DebugViewActivity extends BaseActivity {
     @BindView(R2.id.radioEnvPrd)
     RadioButton radioEnvPrd;
 
+    private IWXAPI api;
+
+    @OnClick(R2.id.testWeixinLogin)
+    void testWinxinLogin() {
+        // send oauth request
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_zhaodongdb_alpha";
+        api.sendReq(req);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug_view);
         ButterKnife.bind(this);
+
+        api = WXAPIFactory.createWXAPI(this, WXConstants.APP_ID,false);
         realm = Realm.getDefaultInstance();
 
         topBar.setTitle("调试工具");
