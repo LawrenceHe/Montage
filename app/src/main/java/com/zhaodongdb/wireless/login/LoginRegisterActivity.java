@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Message;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -30,18 +30,13 @@ import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.utils.BroadcastConstants;
 import com.zhaodongdb.common.utils.Constants;
-import com.zhaodongdb.common.utils.SafeHandler;
 import com.zhaodongdb.common.utils.ThreadUtils;
 import com.zhaodongdb.wireless.R;
-import com.zhaodongdb.wireless.home.HomeController;
-import com.zhaodongdb.wireless.home.MainFragment;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,46 +52,8 @@ public class LoginRegisterActivity extends BaseActivity {
     @BindView(R.id.messageToken) EditText messageTokenEdit;
     @BindView(R.id.sendMessageToken) QMUIRoundButton sendMessageTokenButton;
 
-    private final int COUNT_DOWN = 6;
-    private int count = COUNT_DOWN;
-    private SafeHandler handler = new SafeHandler(this);
-    private Timer timer = null;
-
-    @Override
-    public void safeHandleMessage(Message msg) {
-        super.safeHandleMessage(msg);
-
-        if (msg.what == 1) {
-            count--;
-            sendMessageTokenButton.setEnabled(false);
-            sendMessageTokenButton.setText(String.format(Locale.getDefault(), "(%02d) 短信验证码", count));
-
-            if (count <= 0) {
-                sendMessageTokenButton.setEnabled(true);
-                sendMessageTokenButton.setText("发送短信验证码");
-                timer.cancel();
-            }
-        }
-    }
-
-    void startMessageTokenCountDown() {
-
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                msg.what = 1;
-                handler.sendMessage(msg);
-            }
-        };
-        count = COUNT_DOWN;
-        timer.schedule(task,0,1000);
-
-    }
+    final int TOTAL_SECONDS = 5;
+    final int ONCE_SECONDS = 1;
 
     @OnClick(R.id.sendMessageToken) void sendMessageToken() {
         String mobile = mobileEdit.getText().toString();
@@ -104,8 +61,21 @@ public class LoginRegisterActivity extends BaseActivity {
             Toast.makeText(LoginRegisterActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
             return;
         }
-        // 开启短信验证码倒计时，60秒只能发一次
-        startMessageTokenCountDown();
+
+        // 开启短信验证码倒计时
+        new CountDownTimer(TOTAL_SECONDS * 1000, ONCE_SECONDS * 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                sendMessageTokenButton.setEnabled(false);
+                sendMessageTokenButton.setText(String.format(Locale.getDefault(), "(%02d) 短信验证码", (int)(millisUntilFinished / 1000)));
+            }
+
+            @Override
+            public void onFinish() {
+                sendMessageTokenButton.setEnabled(true);
+                sendMessageTokenButton.setText("发送短信验证码");
+            }
+        }.start();
 
         Map<String, String> body = new HashMap<>();
         body.put("mobile", mobile);
@@ -224,9 +194,6 @@ public class LoginRegisterActivity extends BaseActivity {
         super.onDestroy();
         if (wechatLoginReceiver != null) {
             unregisterReceiver(wechatLoginReceiver);
-        }
-        if (timer != null) {
-            timer.cancel();
         }
     }
 }
