@@ -12,12 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/common_icon_person" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,7 +73,7 @@
     </com.google.android.flexbox.FlexboxLayout>
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:id="@+id/loginOrRegister"
+        android:id="@+id/bindMobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -90,15 +84,8 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="登录/注册"
+        android:text="绑定"
         android:textSize="25dp"
         app:qmui_isRadiusAdjustBounds="true" />
-
-    <ImageView
-        android:id="@+id/wxLogin"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/icon64_appwx_logo" />
 
 </com.google.android.flexbox.FlexboxLayout>

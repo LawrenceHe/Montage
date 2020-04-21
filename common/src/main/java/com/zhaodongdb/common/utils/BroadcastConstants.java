@@ -10,5 +10,7 @@ public class BroadcastConstants {
     final static public String ZD_GESTURE_PWD_SET_SUCCESS = "ZD_GESTURE_PWD_SET_SUCCESS";
     // 手势密码验证成功
     final static public String ZD_GESTURE_PWD_CHECK_SUCCESS = "ZD_GESTURE_PWD_CHECK_SUCCESS";
+    // 微信登录成功
+    final static public String ZD_WECHAT_LOGIN_SUCCESS = "ZD_WECHAT_LOGIN_SUCCESS";
 
 }

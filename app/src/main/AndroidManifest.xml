@@ -52,6 +52,7 @@
 
         <activity android:name=".MainActivity" />
         <activity android:name=".login.LoginRegisterActivity" />
+        <activity android:name=".login.BindMobileActivity" />
         <activity android:name=".patternlocker.PatternSettingActivity" />
         <activity android:name=".patternlocker.PatternCheckingActivity" />
     </application>

@@ -1,11 +1,8 @@
 package com.zhaodongdb.wireless.login;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Message;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -13,12 +10,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.zhaodongdb.common.component.BaseActivity;
 import com.zhaodongdb.common.network.HttpRequestHelper;
 import com.zhaodongdb.common.network.RequestUrlsEnum;
@@ -29,83 +24,54 @@ import com.zhaodongdb.common.network.ZDHttpFailure;
 import com.zhaodongdb.common.network.ZDHttpResponse;
 import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.utils.BroadcastConstants;
-import com.zhaodongdb.common.utils.Constants;
-import com.zhaodongdb.common.utils.SafeHandler;
 import com.zhaodongdb.common.utils.ThreadUtils;
 import com.zhaodongdb.wireless.R;
-import com.zhaodongdb.wireless.home.HomeController;
-import com.zhaodongdb.wireless.home.MainFragment;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@Route(path = "/base/login")
-public class LoginRegisterActivity extends BaseActivity {
+@Route(path = "/base/bindMobile")
+public class BindMobileActivity extends BaseActivity {
 
-    static final String TAG = LoginRegisterActivity.class.getSimpleName();
+    static final String TAG = BindMobileActivity.class.getSimpleName();
+
+    @Autowired String authChannel;
+    @Autowired String openId;
 
     @BindView(R.id.topbar) QMUITopBarLayout topBarLayout;
     @BindView(R.id.mobile) EditText mobileEdit;
     @BindView(R.id.messageToken) EditText messageTokenEdit;
     @BindView(R.id.sendMessageToken) QMUIRoundButton sendMessageTokenButton;
 
-    private final int COUNT_DOWN = 6;
-    private int count = COUNT_DOWN;
-    private SafeHandler handler = new SafeHandler(this);
-    private Timer timer = null;
-
-    @Override
-    public void safeHandleMessage(Message msg) {
-        super.safeHandleMessage(msg);
-
-        if (msg.what == 1) {
-            count--;
-            sendMessageTokenButton.setEnabled(false);
-            sendMessageTokenButton.setText(String.format(Locale.getDefault(), "(%02d) 短信验证码", count));
-
-            if (count <= 0) {
-                sendMessageTokenButton.setEnabled(true);
-                sendMessageTokenButton.setText("发送短信验证码");
-                timer.cancel();
-            }
-        }
-    }
-
-    void startMessageTokenCountDown() {
-
-        if (timer != null) {
-            timer.cancel();
-        }
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                Message msg = new Message();
-                msg.what = 1;
-                handler.sendMessage(msg);
-            }
-        };
-        count = COUNT_DOWN;
-        timer.schedule(task,0,1000);
-
-    }
+    final int TOTAL_SECONDS = 5;
+    final int ONCE_SECONDS = 1;
 
     @OnClick(R.id.sendMessageToken) void sendMessageToken() {
         String mobile = mobileEdit.getText().toString();
         if (mobile.length() != 11) {
-            Toast.makeText(LoginRegisterActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BindMobileActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
             return;
         }
-        // 开启短信验证码倒计时，60秒只能发一次
-        startMessageTokenCountDown();
+        // 开启短信验证码倒计时
+        new CountDownTimer(TOTAL_SECONDS * 1000, ONCE_SECONDS * 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                sendMessageTokenButton.setEnabled(false);
+                sendMessageTokenButton.setText(String.format(Locale.getDefault(), "(%02d) 短信验证码", (int)(millisUntilFinished / 1000)));
+            }
+
+            @Override
+            public void onFinish() {
+                sendMessageTokenButton.setEnabled(true);
+                sendMessageTokenButton.setText("发送短信验证码");
+            }
+        }.start();
 
         Map<String, String> body = new HashMap<>();
         body.put("mobile", mobile);
@@ -127,10 +93,10 @@ public class LoginRegisterActivity extends BaseActivity {
                                 String resp = response.getResponseString();
                                 Result<MessageTokenRespData> result = HttpRequestHelper.parseHttpResponse(resp, MessageTokenRespData.class);
                                 if (result.isSuccess()) {
-                                    Toast.makeText(LoginRegisterActivity.this, "短信验证码发送成功", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BindMobileActivity.this, "短信验证码发送成功", Toast.LENGTH_SHORT).show();
                                     messageTokenEdit.setText(result.getData().getMessageToken());
                                 } else {
-                                    Toast.makeText(LoginRegisterActivity.this, "短信验证码发送失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BindMobileActivity.this, "短信验证码发送失败", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -138,16 +104,18 @@ public class LoginRegisterActivity extends BaseActivity {
                 });
     }
 
-    @OnClick(R.id.loginOrRegister) void loginOrRegister() {
+    @OnClick(R.id.bindMobile) void bindMobile() {
         String mobile = mobileEdit.getText().toString();
         String messageToken = messageTokenEdit.getText().toString();
         if (mobile.length() != 11) {
-            Toast.makeText(LoginRegisterActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
+            Toast.makeText(BindMobileActivity.this, "请填写正确的手机号", Toast.LENGTH_SHORT).show();
             return;
         }
         Map<String, String> body = new HashMap<>();
         body.put("mobile", mobile);
         body.put("messageToken", messageToken);
+        body.put("authChannel", authChannel);
+        body.put("authChannelId", openId);
         ZDHttpClient.getInstance().asyncPost(
                 RequestUrlsEnum.LOGIN_BY_MOBILE.getEnvUrl(),
                 HttpRequestHelper.buildJsonRequest(body),
@@ -155,7 +123,7 @@ public class LoginRegisterActivity extends BaseActivity {
 
                     @Override
                     public void onFailure(ZDHttpFailure failure) {
-                        Log.d(TAG, "login or register failure");
+                        Log.d(TAG, "bind mobile request failure");
                     }
 
                     @Override
@@ -166,7 +134,7 @@ public class LoginRegisterActivity extends BaseActivity {
                                 String resp = response.getResponseString();
                                 Result<LoginRegisterRespData> result = HttpRequestHelper.parseHttpResponse(resp, LoginRegisterRespData.class);
                                 if (result.isSuccess()) {
-                                    Toast.makeText(LoginRegisterActivity.this, "短信验证码正确", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BindMobileActivity.this, "短信验证码正确", Toast.LENGTH_SHORT).show();
                                     //UserInfo.getInstance().clearUserId();
                                     if (result.getData().getHasSetGesture()) {
                                         ZDRouter.navigation(String.format("/base/patternlocker/checking?verifyUserId=%s", result.getData().getVerifyUserId()));
@@ -174,9 +142,9 @@ public class LoginRegisterActivity extends BaseActivity {
                                         ZDRouter.navigation(String.format("/base/patternlocker/setting?verifyUserId=%s", result.getData().getVerifyUserId()));
                                     }
                                     sendBroadcast(new Intent(BroadcastConstants.ZD_TEXT_MSG_VERIFICATION_SUCCESS));
-                                    LoginRegisterActivity.this.finish();
+                                    BindMobileActivity.this.finish();
                                 } else {
-                                    Toast.makeText(LoginRegisterActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BindMobileActivity.this, result.getMsg(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -184,33 +152,13 @@ public class LoginRegisterActivity extends BaseActivity {
                 });
     }
 
-    private BroadcastReceiver wechatLoginReceiver;
-
-    @OnClick(R.id.wxLogin) void onWechatLogin() {
-        IWXAPI api = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID,false);
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_zhaodongdb_alpha";
-        api.sendReq(req);
-
-        if (wechatLoginReceiver == null) {
-            wechatLoginReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    LoginRegisterActivity.this.finish();
-                }
-            };
-        }
-        registerReceiver(wechatLoginReceiver, new IntentFilter(BroadcastConstants.ZD_WECHAT_LOGIN_SUCCESS));
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_register);
+        setContentView(R.layout.activity_bind_mobile);
         ButterKnife.bind(this);
 
-        topBarLayout.setTitle("登录/注册");
+        topBarLayout.setTitle("绑定手机号");
         topBarLayout.addLeftBackImageButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,14 +167,4 @@ public class LoginRegisterActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (wechatLoginReceiver != null) {
-            unregisterReceiver(wechatLoginReceiver);
-        }
-        if (timer != null) {
-            timer.cancel();
-        }
-    }
 }

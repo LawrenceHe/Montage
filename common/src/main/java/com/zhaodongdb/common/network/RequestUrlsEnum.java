@@ -10,6 +10,7 @@ public enum RequestUrlsEnum {
     LOGIN_MESSAGE_TOKEN("sign/getMessageToken.json"),
     LOGIN_BY_GESTURE("sign/loginByGesture.json"),
     SET_GESTURE("sign/setGesture.json"),
+    AUTH_BY_WE_CHAT("sign/authByWeChat.json"),
     MONTAGE_PAGE("page/getPageInfo.json"),
 
     //====================

@@ -21,7 +21,7 @@ import com.zhaodongdb.common.router.ZDRouter;
 import com.zhaodongdb.common.user.User;
 import com.zhaodongdb.common.utils.FoundationContextHolder;
 import com.zhaodongdb.common.R;
-import com.zhaodongdb.common.utils.WXConstants;
+import com.zhaodongdb.common.utils.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +89,7 @@ public class DebugViewActivity extends BaseActivity {
 
     private IWXAPI api;
 
-    @OnClick(R2.id.testWeixinLogin)
+    @OnClick(R2.id.testWechatLogin)
     void testWinxinLogin() {
         // send oauth request
         final SendAuth.Req req = new SendAuth.Req();
@@ -104,7 +104,7 @@ public class DebugViewActivity extends BaseActivity {
         setContentView(R.layout.activity_debug_view);
         ButterKnife.bind(this);
 
-        api = WXAPIFactory.createWXAPI(this, WXConstants.APP_ID,false);
+        api = WXAPIFactory.createWXAPI(this, Constants.WX_APP_ID,false);
         realm = Realm.getDefaultInstance();
 
         topBar.setTitle("调试工具");

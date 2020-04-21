@@ -6,6 +6,9 @@ public class LoginRegisterRespData {
     private String userName;
     private Boolean hasSetGesture;
 
+    private String authChannel;
+    private String openId;
+
     public String getVerifyUserId() {
         return verifyUserId;
     }
@@ -29,4 +32,21 @@ public class LoginRegisterRespData {
     public void setHasSetGesture(Boolean hasSetGesture) {
         this.hasSetGesture = hasSetGesture;
     }
+
+    public String getAuthChannel() {
+        return authChannel;
+    }
+
+    public void setAuthChannel(String authChannel) {
+        this.authChannel = authChannel;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
 }
